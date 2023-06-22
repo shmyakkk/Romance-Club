@@ -18,6 +18,7 @@ namespace VNCreator
             source.playOnAwake = false;
             source.loop = true;
             source.volume = GameOptions.musicVolume;
+            source.mute = !GameOptions.musicActive;
         }
 
         public void Play(AudioClip clip)
