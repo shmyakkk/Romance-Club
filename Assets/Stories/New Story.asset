@@ -13,23 +13,23 @@ MonoBehaviour:
   m_Name: New Story
   m_EditorClassIdentifier: 
   links:
-  - guid: 3dda533f-e1d2-4f47-b6cc-e4b02a8c59a2
-    targetGuid: 577a5ecf-c48e-4ad6-8326-dd7eb73d01af
-    portId: 0
-  - guid: 577a5ecf-c48e-4ad6-8326-dd7eb73d01af
-    targetGuid: 97f5fc06-8857-4268-92cc-063dab36da0d
-    portId: 1
   - guid: 97f5fc06-8857-4268-92cc-063dab36da0d
     targetGuid: 25cbddfe-e349-4fdf-aa81-05ee6f06f92b
-    portId: 2
+    portId: 0
   - guid: 97f5fc06-8857-4268-92cc-063dab36da0d
     targetGuid: e941492d-af7b-4ffa-b830-f86d5e422b94
-    portId: 3
+    portId: 1
   - guid: 25cbddfe-e349-4fdf-aa81-05ee6f06f92b
     targetGuid: b4abe73b-c4f2-4f6c-b0e3-9ae12a60eddc
-    portId: 4
+    portId: 2
   - guid: e941492d-af7b-4ffa-b830-f86d5e422b94
     targetGuid: 5d00688f-3101-44e4-9b58-1994c5eac1bf
+    portId: 3
+  - guid: 3dda533f-e1d2-4f47-b6cc-e4b02a8c59a2
+    targetGuid: 577a5ecf-c48e-4ad6-8326-dd7eb73d01af
+    portId: 4
+  - guid: 577a5ecf-c48e-4ad6-8326-dd7eb73d01af
+    targetGuid: 97f5fc06-8857-4268-92cc-063dab36da0d
     portId: 5
   nodes:
   - guid: 97f5fc06-8857-4268-92cc-063dab36da0d
@@ -124,6 +124,24 @@ MonoBehaviour:
       height: 303.20007
     soundEffect: {fileID: 0}
     backgroundMusic: {fileID: 0}
+  - guid: 577a5ecf-c48e-4ad6-8326-dd7eb73d01af
+    characterSpr: {fileID: 21300000, guid: 399d1b59290c28248a7a5643b4344c2a, type: 3}
+    characterName: "\u0433\u0433"
+    dialogueText: "\u043F\u043E\u043A\u0430"
+    backgroundSpr: {fileID: 21300000, guid: d091faaefe887414290d9ca5582fedb1, type: 3}
+    startNode: 0
+    endNode: 0
+    choices: 1
+    choiceOptions:
+    - 
+    nodePosition:
+      serializedVersion: 2
+      x: 883.2
+      y: 546.4
+      width: 499.2
+      height: 303.2
+    soundEffect: {fileID: 0}
+    backgroundMusic: {fileID: 8300000, guid: 899d7fef1c29cd24d9ef66ba70f865d7, type: 3}
   - guid: 3dda533f-e1d2-4f47-b6cc-e4b02a8c59a2
     characterSpr: {fileID: 21300000, guid: 1703745311dde344698f5e95646acf02, type: 3}
     characterName: "\u043F\u0443\u043F\u0430 "
@@ -142,21 +160,3 @@ MonoBehaviour:
       height: 303.2
     soundEffect: {fileID: 0}
     backgroundMusic: {fileID: 8300000, guid: 8275a4bd932cf644b8913c201305a8f4, type: 3}
-  - guid: 577a5ecf-c48e-4ad6-8326-dd7eb73d01af
-    characterSpr: {fileID: 21300000, guid: 399d1b59290c28248a7a5643b4344c2a, type: 3}
-    characterName: "\u0437\u0430\u043B\u0443\u043F\u0430"
-    dialogueText: "\u043F\u043E\u043A\u0430"
-    backgroundSpr: {fileID: 21300000, guid: d091faaefe887414290d9ca5582fedb1, type: 3}
-    startNode: 0
-    endNode: 0
-    choices: 1
-    choiceOptions:
-    - 
-    nodePosition:
-      serializedVersion: 2
-      x: 883.2
-      y: 546.4
-      width: 499.2
-      height: 303.2
-    soundEffect: {fileID: 0}
-    backgroundMusic: {fileID: 8300000, guid: 899d7fef1c29cd24d9ef66ba70f865d7, type: 3}

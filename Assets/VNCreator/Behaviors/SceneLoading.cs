@@ -3,18 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using VNCreator;
 
 public class SceneLoading : MonoBehaviour
 {
     public Image loadingBar;
+    public Text loadingText;
 
-    public void LoadScene(string sceneName)
+    private RectTransform rectTransform;
+
+    private float imageWidth; //100%
+    private float xPosition = 0; //0%
+
+    private float delayTime = 2f;
+
+    private void Start()
+    {
+        rectTransform = loadingBar.GetComponent<RectTransform>();
+        imageWidth = rectTransform.rect.width;
+        Debug.Log(imageWidth);
+    }
+
+    public void LoadScene(string sceneName) 
     {
         StartCoroutine(LoadSceneAsync(sceneName));
     }
 
     private IEnumerator LoadSceneAsync(string sceneName)
     {
+        yield return new WaitForSeconds(delayTime);
+
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
 
         while (!operation.isDone)
@@ -24,7 +42,9 @@ public class SceneLoading : MonoBehaviour
             // Обновление индикатора загрузки
             if (loadingBar != null)
             {
-                loadingBar.fillAmount = progress;
+                loadingText.text = progress * 100 + "%";
+                xPosition = progress * imageWidth;
+                rectTransform.anchoredPosition = new Vector2(xPosition, 0);
             }
 
             yield return null;

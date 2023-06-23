@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,6 +24,7 @@ namespace VNCreator
         public GameObject storeMenu;
         public GameObject optionsMenu;
         public GameObject mainMenu;
+        public GameObject sceneLoader;
 
         void Start()
         {
@@ -47,7 +49,10 @@ namespace VNCreator
         {
             GameSaveManager.NewLoad("MainGame");
             //SceneManager.LoadScene(playScene, LoadSceneMode.Single);
-            
+            sceneLoader.SetActive(true);
+            mainMenu.SetActive(false);
+
+            sceneLoader.GetComponent<SceneLoading>().LoadScene(playScene);
         }
 
         void LoadGame()

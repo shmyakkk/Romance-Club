@@ -8,6 +8,13 @@ namespace VNCreator
 {
     public class VNCreator_DisplayUI : DisplayBase
     {
+        [Header("Start")]
+        public GameObject nameSetScreen;
+        public GameObject dressScreen;
+        public GameObject storyScreen;
+        public InputField playerName;
+        public Button nameSubmitBtn;
+        
         [Header("Text")]
         public Text characterNameTxt;
         public Text dialogueTxt;
@@ -35,6 +42,8 @@ namespace VNCreator
 
         void Start()
         {
+            nameSubmitBtn.onClick.AddListener(SubmitName);
+
             nextBtn.onClick.AddListener(delegate { NextNode(0); });
             if(previousBtn != null)
                 previousBtn.onClick.AddListener(Previous);
@@ -52,8 +61,29 @@ namespace VNCreator
             if (choiceBtn4 != null)
                 choiceBtn4.onClick.AddListener(delegate { NextNode(3); });
 
+            storyScreen.SetActive(false);
             endScreen.SetActive(false);
+        }
 
+        private void SubmitName()
+        {
+            if (playerName.text.Length > 0)
+            {
+                PlayerPrefs.SetString("PlayerName", playerName.text);
+            }
+            else
+            {
+                PlayerPrefs.SetString("PlayerName", "Кейт");
+            }
+
+            nameSetScreen.SetActive(false);
+            storyScreen.SetActive(true);
+            StartStory();
+        }
+
+        //edit
+        private void StartStory()
+        {
             StartCoroutine(DisplayCurrentNode());
         }
 
@@ -71,7 +101,16 @@ namespace VNCreator
 
         IEnumerator DisplayCurrentNode()
         {
-            characterNameTxt.text = currentNode.characterName;
+            if (currentNode.characterName == "гг")
+            {
+                if (PlayerPrefs.HasKey("PlayerName")) 
+                    characterNameTxt.text = PlayerPrefs.GetString("PlayerName");
+            }
+            else
+            {
+                characterNameTxt.text = currentNode.characterName;
+            }
+
             if (currentNode.characterSpr != null)
             {
                 characterImg.sprite = currentNode.characterSpr;
