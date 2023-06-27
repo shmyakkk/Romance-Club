@@ -110,7 +110,7 @@ namespace VNCreator
             dialogueSprDiaplay.style.backgroundImage = node.nodeData.dialogueSpr ? node.nodeData.dialogueSpr.texture : null;
 
             ObjectField dialogueSprField = this.Query<ObjectField>("Dialogue_Selector").First();
-            dialogueSprField.objectType=typeof(Sprite);
+            dialogueSprField.objectType = typeof(Sprite);
             dialogueSprField.value = node.nodeData.dialogueSpr;
             dialogueSprField.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
                 e =>

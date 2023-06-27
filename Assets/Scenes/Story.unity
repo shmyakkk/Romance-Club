@@ -5727,7 +5727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19bffdf8e809ebd439aaf9f444d2ea04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  story: {fileID: 11400000, guid: 5d73371ee18d24d4eb78af3f99fc5279, type: 2}
+  story: {fileID: 11400000, guid: 98b7dafd4f239984f9220cf45e7f307c, type: 2}
   nameSetScreen: {fileID: 253489855}
   dressScreen: {fileID: 806566006}
   storyScreen: {fileID: 1569699032}
