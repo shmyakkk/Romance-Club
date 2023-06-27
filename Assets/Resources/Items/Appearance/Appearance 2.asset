@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80d55d090c78b6240aa6dccd6042a022, type: 3}
-  m_Name: New Story
+  m_Script: {fileID: 11500000, guid: 3b88a7765caed6444a183a760db3cc8d, type: 3}
+  m_Name: Appearance 2
   m_EditorClassIdentifier: 
-  links: []
-  nodes: []
+  category: Appearance
+  Id: 1
+  sprite: {fileID: 21300000, guid: 23ec144938a6c7944bc94f86e2aad4a4, type: 3}

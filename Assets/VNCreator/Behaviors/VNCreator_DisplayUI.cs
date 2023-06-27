@@ -14,12 +14,16 @@ namespace VNCreator
         public GameObject storyScreen;
         public InputField playerName;
         public Button nameSubmitBtn;
-        
+        public Button startStoryBtn;
+
         [Header("Text")]
         public Text characterNameTxt;
         public Text dialogueTxt;
         [Header("Visuals")]
-        public Image characterImg;
+        public Image appearanceImg;
+        public Image dressImg;
+        public Image hairImg;
+        public Image accessoriesImg;
         public Image backgroundImg;
         [Header("Audio")]
         public AudioSource musicSource;
@@ -43,23 +47,7 @@ namespace VNCreator
         void Start()
         {
             nameSubmitBtn.onClick.AddListener(SubmitName);
-
-            nextBtn.onClick.AddListener(delegate { NextNode(0); });
-            if(previousBtn != null)
-                previousBtn.onClick.AddListener(Previous);
-            if(saveBtn != null)
-                saveBtn.onClick.AddListener(Save);
-            if (menuButton != null)
-                menuButton.onClick.AddListener(ExitGame);
-
-            if(choiceBtn1 != null)
-                choiceBtn1.onClick.AddListener(delegate { NextNode(0); });
-            if(choiceBtn2 != null)
-                choiceBtn2.onClick.AddListener(delegate { NextNode(1); });
-            if(choiceBtn3 != null)
-                choiceBtn3.onClick.AddListener(delegate { NextNode(2); });
-            if (choiceBtn4 != null)
-                choiceBtn4.onClick.AddListener(delegate { NextNode(3); });
+            startStoryBtn.onClick.AddListener(StartStory);
 
             storyScreen.SetActive(false);
             endScreen.SetActive(false);
@@ -76,14 +64,39 @@ namespace VNCreator
                 PlayerPrefs.SetString("PlayerName", "Кейт");
             }
 
-            nameSetScreen.SetActive(false);
-            storyScreen.SetActive(true);
-            StartStory();
+            OpenDressRoom();
         }
 
         //edit
+
+        private void OpenDressRoom()
+        {
+            dressScreen.SetActive(true);
+            nameSetScreen.SetActive(false);
+        }
+
         private void StartStory()
         {
+            storyScreen.SetActive(true);
+            dressScreen.SetActive(false);
+
+            nextBtn.onClick.AddListener(delegate { NextNode(0); });
+            if (previousBtn != null)
+                previousBtn.onClick.AddListener(Previous);
+            if (saveBtn != null)
+                saveBtn.onClick.AddListener(Save);
+            if (menuButton != null)
+                menuButton.onClick.AddListener(ExitGame);
+
+            if (choiceBtn1 != null)
+                choiceBtn1.onClick.AddListener(delegate { NextNode(0); });
+            if (choiceBtn2 != null)
+                choiceBtn2.onClick.AddListener(delegate { NextNode(1); });
+            if (choiceBtn3 != null)
+                choiceBtn3.onClick.AddListener(delegate { NextNode(2); });
+            if (choiceBtn4 != null)
+                choiceBtn4.onClick.AddListener(delegate { NextNode(3); });
+
             StartCoroutine(DisplayCurrentNode());
         }
 
@@ -105,21 +118,45 @@ namespace VNCreator
             {
                 if (PlayerPrefs.HasKey("PlayerName")) 
                     characterNameTxt.text = PlayerPrefs.GetString("PlayerName");
+
+                if (PlayerPrefs.HasKey(ItemsDatabase.Category.Appearance.ToString()) && appearanceImg)
+                {
+                    appearanceImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Appearance).sprite;
+                    appearanceImg.color = new(1, 1, 1, 1);
+                }
+
+                if (PlayerPrefs.HasKey(ItemsDatabase.Category.Dress.ToString()) && dressImg)
+                {
+                    dressImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Dress).sprite;
+                    dressImg.color = new(1, 1, 1, 1);
+                }
+
+                if (PlayerPrefs.HasKey(ItemsDatabase.Category.Hair.ToString()) && hairImg)
+                {
+                    hairImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Hair).sprite;
+                    hairImg.color = new(1, 1, 1, 1);
+                }
+
+                if (PlayerPrefs.HasKey(ItemsDatabase.Category.Accessories.ToString()) && accessoriesImg)
+                    accessoriesImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Accessories).sprite;
+            }
+            else if (currentNode.characterName == "")
+            {
+                characterNameTxt.text = "";
+                appearanceImg.sprite = currentNode.characterSpr;
+                appearanceImg.color = new(1, 1, 1, 0);
+                dressImg.color = new(1, 1, 1, 0);
+                hairImg.color = new(1, 1, 1, 0);
             }
             else
             {
                 characterNameTxt.text = currentNode.characterName;
+                appearanceImg.sprite = currentNode.characterSpr;
+                appearanceImg.color = new(1, 1, 1, 1);   
+                dressImg.color = new (1, 1, 1, 0);
+                hairImg.color = new (1, 1, 1, 0);
             }
 
-            if (currentNode.characterSpr != null)
-            {
-                characterImg.sprite = currentNode.characterSpr;
-                characterImg.color = Color.white;
-            }
-            else
-            {
-                characterImg.color = new Color(1, 1, 1, 0);
-            }
             if(currentNode.backgroundSpr != null)
                 backgroundImg.sprite = currentNode.backgroundSpr;
 

@@ -7,7 +7,8 @@ namespace VNCreator
     [CreateAssetMenu(fileName = "New Item", menuName = "New Item")]
     public class Item : ScriptableObject
     {
-        [SerializeField] private int Id = 0;
-        [SerializeField] private Sprite sprite;
+        public string category;
+        public int Id = 0;
+        public Sprite sprite;
     }
 }

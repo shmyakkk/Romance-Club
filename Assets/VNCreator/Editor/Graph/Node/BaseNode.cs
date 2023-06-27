@@ -105,6 +105,20 @@ namespace VNCreator
                     backSprDisplay.style.backgroundImage = node.nodeData.backgroundSpr ? node.nodeData.backgroundSpr.texture : null;
                 }
             );
+
+            VisualElement dialogueSprDiaplay = this.Query<VisualElement>("Dialogue_Img");
+            dialogueSprDiaplay.style.backgroundImage = node.nodeData.dialogueSpr ? node.nodeData.dialogueSpr.texture : null;
+
+            ObjectField dialogueSprField = this.Query<ObjectField>("Dialogue_Selector").First();
+            dialogueSprField.objectType=typeof(Sprite);
+            dialogueSprField.value = node.nodeData.dialogueSpr;
+            dialogueSprField.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
+                e =>
+                {
+                    node.nodeData.dialogueSpr = (Sprite)e.newValue;
+                    dialogueSprDiaplay.style.backgroundImage = node.nodeData.dialogueSpr ? node.nodeData.dialogueSpr.texture : null;
+                }
+            );
         }
     }
 #endif

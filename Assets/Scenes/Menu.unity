@@ -10091,7 +10091,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1791174767}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ToggleBehavior, Assembly-CSharp
         m_MethodName: ChangeSprite
         m_Mode: 1
@@ -10143,7 +10143,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1791174762}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d418c622b8c1b6d418164f2c962b1ada, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f054e6812ef13048865afb9507cad24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   toggleOn: {fileID: 21300000, guid: 0501cf79da0fa264182e1badb4264c1f, type: 3}
