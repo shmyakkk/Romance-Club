@@ -42,7 +42,7 @@ public class SceneLoading : MonoBehaviour
             // Обновление индикатора загрузки
             if (loadingBar != null)
             {
-                loadingText.text = progress * 100 + "%";
+                loadingText.text = (int)(progress * 100) + "%";
                 xPosition = progress * imageWidth;
                 rectTransform.anchoredPosition = new Vector2(xPosition, 0);
             }

@@ -1,11 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using UnityEngine.UI;
-using UnityEngine.WSA;
-using static Codice.CM.WorkspaceServer.WorkspaceTreeDataStore;
-using static UnityEditor.Progress;
 
 namespace VNCreator
 {

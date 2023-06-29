@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -25,6 +26,9 @@ namespace VNCreator
         public Image hairImg;
         public Image accessoriesImg;
         public Image backgroundImg;
+        public Image dialogueImg;
+        [Header("Animation")]
+        public Animator characterAnim;
         [Header("Audio")]
         public AudioSource musicSource;
         public AudioSource soundEffectSource;
@@ -44,13 +48,20 @@ namespace VNCreator
         [Scene]
         public string mainMenu;
 
+        private const string IN_LEFT = "In_Left";
+        private const string IN_RIGHT = "In_Right";
+        private const string OUT_LEFT = "Out_Left";
+        private const string OUT_RIGHT = "Out_Right";
+
+        private Action onAnimationEndCallback;
+
         void Start()
         {
             nameSubmitBtn.onClick.AddListener(SubmitName);
             startStoryBtn.onClick.AddListener(StartStory);
 
             storyScreen.SetActive(false);
-            endScreen.SetActive(false);
+            //endScreen.SetActive(false);
         }
 
         private void SubmitName()
@@ -104,7 +115,7 @@ namespace VNCreator
         {
             if (lastNode)
             {
-                endScreen.SetActive(true);
+                SceneManager.LoadScene("Menu");
                 return;
             }
 
@@ -114,52 +125,74 @@ namespace VNCreator
 
         IEnumerator DisplayCurrentNode()
         {
+            //гг
             if (currentNode.characterName == "гг")
             {
-                if (PlayerPrefs.HasKey("PlayerName")) 
-                    characterNameTxt.text = PlayerPrefs.GetString("PlayerName");
-
-                if (PlayerPrefs.HasKey(ItemsDatabase.Category.Appearance.ToString()) && appearanceImg)
+                if (previousNode != null)
                 {
-                    appearanceImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Appearance).sprite;
-                    appearanceImg.color = new(1, 1, 1, 1);
+                    if (previousNode.characterName != "гг")
+                    {
+                        if (previousNode.characterName != "")
+                        {
+                            PlayAnimation(OUT_RIGHT, SetPlayerAppearance);
+                        }
+                        else
+                        {
+                            SetPlayerAppearance();
+                        }
+                    }
                 }
-
-                if (PlayerPrefs.HasKey(ItemsDatabase.Category.Dress.ToString()) && dressImg)
-                {
-                    dressImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Dress).sprite;
-                    dressImg.color = new(1, 1, 1, 1);
-                }
-
-                if (PlayerPrefs.HasKey(ItemsDatabase.Category.Hair.ToString()) && hairImg)
-                {
-                    hairImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Hair).sprite;
-                    hairImg.color = new(1, 1, 1, 1);
-                }
-
-                if (PlayerPrefs.HasKey(ItemsDatabase.Category.Accessories.ToString()) && accessoriesImg)
-                    accessoriesImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Accessories).sprite;
             }
+            //без перса
             else if (currentNode.characterName == "")
             {
-                characterNameTxt.text = "";
-                appearanceImg.sprite = currentNode.characterSpr;
-                appearanceImg.color = new(1, 1, 1, 0);
-                dressImg.color = new(1, 1, 1, 0);
-                hairImg.color = new(1, 1, 1, 0);
+                if (previousNode != null)
+                {
+                    if (previousNode.characterName != "")
+                    {
+                        if (previousNode.characterName == "гг")
+                        {
+                            PlayAnimation(OUT_LEFT, SetNone);
+                        }
+                        else
+                        {
+                            PlayAnimation(OUT_RIGHT, SetNone);
+                        }
+                    }
+                }
+                else
+                {
+                    SetNone();
+                }
             }
+            //другой перс
             else
             {
-                characterNameTxt.text = currentNode.characterName;
-                appearanceImg.sprite = currentNode.characterSpr;
-                appearanceImg.color = new(1, 1, 1, 1);   
-                dressImg.color = new (1, 1, 1, 0);
-                hairImg.color = new (1, 1, 1, 0);
+                if (previousNode != null)
+                {
+                    if (previousNode.characterName == "гг")
+                    {
+                        PlayAnimation(OUT_LEFT, SetAnotherCharacterAppearance);
+                    }
+                    else if (previousNode.characterName == "")
+                    {
+                        SetAnotherCharacterAppearance();
+                    }
+                    else
+                    {
+                        PlayAnimation(OUT_RIGHT, SetAnotherCharacterAppearance);
+                    }
+                }
             }
 
-            if(currentNode.backgroundSpr != null)
+            //задний фон
+            if (currentNode.backgroundSpr != null)
                 backgroundImg.sprite = currentNode.backgroundSpr;
 
+            if (currentNode.dialogueSpr != null)
+                dialogueImg.sprite = currentNode.dialogueSpr;
+
+            //выборы
             if (currentNode.choices <= 1) 
             {
                 nextBtn.gameObject.SetActive(true);
@@ -169,7 +202,7 @@ namespace VNCreator
                 choiceBtn3.gameObject.SetActive(false);
                 choiceBtn4.gameObject.SetActive(false);
 
-                previousBtn.gameObject.SetActive(loadList.Count != 1);
+                //previousBtn.gameObject.SetActive(loadList.Count != 1);
             }
             else
             {
@@ -235,6 +268,79 @@ namespace VNCreator
         void ExitGame()
         {
             SceneManager.LoadScene(mainMenu, LoadSceneMode.Single);
+        }
+
+        void PlayAnimation(string animationName, Action onAnimationEnd)
+        {
+            onAnimationEndCallback = onAnimationEnd;
+            characterAnim.Play(animationName, 0, 0f);
+            StartCoroutine(WaitForAnimationEnd(animationName));
+        }
+
+        IEnumerator WaitForAnimationEnd(string animationName)
+        {
+            while (!characterAnim.GetCurrentAnimatorStateInfo(0).IsName(animationName))
+            {
+                yield return null;
+            }
+
+            float animationLength = characterAnim.GetCurrentAnimatorStateInfo(0).length;
+            yield return new WaitForSeconds(animationLength);
+
+            if (onAnimationEndCallback != null)
+            {
+                onAnimationEndCallback.Invoke();
+            }
+        }
+
+        void SetPlayerAppearance()
+        {
+            if (PlayerPrefs.HasKey("PlayerName"))
+                characterNameTxt.text = PlayerPrefs.GetString("PlayerName");
+
+            if (PlayerPrefs.HasKey(ItemsDatabase.Category.Appearance.ToString()) && appearanceImg)
+            {
+                appearanceImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Appearance).sprite;
+                appearanceImg.enabled = true;
+            }
+
+            if (PlayerPrefs.HasKey(ItemsDatabase.Category.Dress.ToString()) && dressImg)
+            {
+                dressImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Dress).sprite;
+                dressImg.enabled = true;
+            }
+
+            if (PlayerPrefs.HasKey(ItemsDatabase.Category.Hair.ToString()) && hairImg)
+            {
+                hairImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Hair).sprite;
+                hairImg.enabled = true;
+            }
+
+            if (PlayerPrefs.HasKey(ItemsDatabase.Category.Accessories.ToString()) && accessoriesImg)
+                accessoriesImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Accessories).sprite;
+
+            PlayAnimation(IN_LEFT, null);
+        }
+
+        void SetAnotherCharacterAppearance()
+        {
+            appearanceImg.enabled = true;
+            dressImg.enabled = false;
+            hairImg.enabled = false;
+
+            characterNameTxt.text = currentNode.characterName;
+            appearanceImg.sprite = currentNode.characterSpr;
+
+            PlayAnimation(IN_RIGHT, null);
+        }
+
+        void SetNone()
+        {
+            characterNameTxt.text = "...";
+
+            appearanceImg.enabled = false;
+            dressImg.enabled = false;
+            hairImg.enabled = false;
         }
     }
 }

@@ -41,10 +41,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb0ece14d1f711a4fb9325ca819dee95, type: 3}
   m_Name: AdaptivePerformanceGeneralSettings
   m_EditorClassIdentifier: 
-  Keys: 0400000007000000
+  Keys: 040000000700000001000000
   Values:
   - {fileID: 8013480682184649867}
   - {fileID: -9112524480935574052}
+  - {fileID: 2107338278408515299}
 --- !u!114 &1860129111272753933
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -59,7 +60,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AutomaticLoading: 0
   m_AutomaticRunning: 0
-  m_Loaders: []
+  m_Loaders:
+  - {fileID: 11400000, guid: b0d0ef9008deac547a6c16f14db5fc3c, type: 2}
+--- !u!114 &2107338278408515299
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 179fc3111e144bc4688dca4038b3265d, type: 3}
+  m_Name: Standalone Settings
+  m_EditorClassIdentifier: 
+  m_LoaderManagerInstance: {fileID: 4405195524301480507}
+  m_InitManagerOnStart: 1
+--- !u!114 &4405195524301480507
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536372c49e1ca914d822849d36de938c, type: 3}
+  m_Name: Standalone Providers
+  m_EditorClassIdentifier: 
+  m_AutomaticLoading: 0
+  m_AutomaticRunning: 0
+  m_Loaders:
+  - {fileID: 11400000, guid: faa69424363d73c4187b7a5eb43122f3, type: 2}
 --- !u!114 &8013480682184649867
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -73,4 +105,4 @@ MonoBehaviour:
   m_Name: iPhone Settings
   m_EditorClassIdentifier: 
   m_LoaderManagerInstance: {fileID: -139939658126738849}
-  m_InitManagerOnStart: 0
+  m_InitManagerOnStart: 1

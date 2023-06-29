@@ -2346,7 +2346,6 @@ GameObject:
   - component: {fileID: 419158163}
   - component: {fileID: 419158162}
   - component: {fileID: 419158161}
-  - component: {fileID: 419158164}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -2456,23 +2455,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 419158159}
   m_CullTransparentMesh: 1
---- !u!114 &419158164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 419158159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cdb7bc734bea1e4296ad3195ac52b3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shadowColor: {r: 0, g: 0, b: 0, a: 0.2509804}
-  shadowDistance: {x: 0, y: -8}
-  m_UseGraphicAlpha: 1
-  iterations: 25
-  shadowSpread: {x: 0, y: 10}
 --- !u!1 &423704757
 GameObject:
   m_ObjectHideFlags: 0
@@ -5209,7 +5191,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 80.99997, y: 270}
+  m_AnchoredPosition: {x: 81, y: 270}
   m_SizeDelta: {x: 666, y: 138.09}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &862561302
@@ -5330,7 +5312,6 @@ GameObject:
   - component: {fileID: 865098133}
   - component: {fileID: 865098132}
   - component: {fileID: 865098131}
-  - component: {fileID: 865098134}
   m_Layer: 5
   m_Name: Copy Button
   m_TagString: Untagged
@@ -5440,23 +5421,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 865098129}
   m_CullTransparentMesh: 1
---- !u!114 &865098134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 865098129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cdb7bc734bea1e4296ad3195ac52b3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shadowColor: {r: 0, g: 0, b: 0, a: 0.2509804}
-  shadowDistance: {x: 0, y: -8}
-  m_UseGraphicAlpha: 1
-  iterations: 25
-  shadowSpread: {x: 0, y: 10}
 --- !u!1 &876355383
 GameObject:
   m_ObjectHideFlags: 0

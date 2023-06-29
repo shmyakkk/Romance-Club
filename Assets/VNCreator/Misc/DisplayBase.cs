@@ -10,6 +10,7 @@ namespace VNCreator
         public StoryObject story;
 
         protected NodeData currentNode;
+        protected NodeData previousNode;
         protected bool lastNode;
 
         protected List<string> loadList = new List<string>();
@@ -41,6 +42,7 @@ namespace VNCreator
         {
             if (!lastNode) 
             {
+                previousNode = currentNode;
                 currentNode = story.GetNextNode(currentNode.guid, _choiceId);
                 lastNode = currentNode.endNode;
                 loadList.Add(currentNode.guid);
