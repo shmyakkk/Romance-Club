@@ -12,7 +12,7 @@ namespace VNCreator
 
         public void ChangeSprite()
         {
-            if (gameObject.GetComponent<Toggle>().isOn)
+            if (GetComponent<Toggle>().isOn)
                 gameObject.GetComponent<Image>().sprite = toggleOn;
             else gameObject.GetComponent<Image>().sprite = toggleOff;
         }
