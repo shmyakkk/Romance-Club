@@ -1,0 +1,44 @@
+.bold18 {
+    -unity-font-definition: url('project://database/Assets/Montserrat/Montserrat-Bold%20SDF%201.asset?fileID=11400000&guid=d4295db0802dcf84ba5bbccac20ff7d2&type=2#Montserrat-Bold SDF 1');
+    -unity-font: initial;
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+}
+
+.semiBold16 {
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    -unity-font-definition: url('project://database/Assets/Montserrat/Montserrat-SemiBold%20SDF%201.asset?fileID=11400000&guid=cf7a9124e7d6f0a45b5c911ff4a8ce42&type=2#Montserrat-SemiBold SDF 1');
+    -unity-font: initial;
+}
+
+.semiBold12 {
+    -unity-font-definition: url('project://database/Assets/Montserrat/Montserrat-SemiBold%20SDF%201.asset?fileID=11400000&guid=cf7a9124e7d6f0a45b5c911ff4a8ce42&type=2#Montserrat-SemiBold SDF 1');
+    -unity-font: initial;
+    font-size: 12px;
+    color: rgb(152, 87, 189);
+}
+
+.medium18 {
+    -unity-font-definition: url('project://database/Assets/Montserrat/Montserrat-Medium%20SDF%201.asset?fileID=11400000&guid=9582a84d6c6c5dc4598167e7b5c09a28&type=2#Montserrat-Medium SDF 1');
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    -unity-font: initial;
+}
+
+.medium14 {
+    -unity-font-definition: url('project://database/Assets/Montserrat/Montserrat-Medium%20SDF%201.asset?fileID=11400000&guid=9582a84d6c6c5dc4598167e7b5c09a28&type=2#Montserrat-Medium SDF 1');
+    -unity-font: initial;
+    color: rgb(255, 255, 255);
+}
+
+.regular14 {
+    -unity-font: initial;
+    -unity-font-definition: url('project://database/Assets/Montserrat/Montserrat-Regular%20SDF%201.asset?fileID=11400000&guid=2f64e7a359a843f4c9d3f74072fdcd02&type=2#Montserrat-Regular SDF 1');
+    color: rgb(0, 0, 0);
+}
+
+.light14 {
+    -unity-font-definition: url('project://database/Assets/Montserrat/Montserrat-Light%20SDF%201.asset?fileID=11400000&guid=891de9e8c95c10c47a82557220aaa126&type=2#Montserrat-Light SDF 1');
+    color: rgb(255, 255, 255);
+}

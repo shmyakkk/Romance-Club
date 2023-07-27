@@ -43,7 +43,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.AdaptivePerformance:UnityEngine.AdaptivePerformance:AdaptivePerformanceManagerSettings
   m_AutomaticLoading: 0
   m_AutomaticRunning: 0
-  m_Loaders: []
+  m_Loaders:
+  - {fileID: 11400000, guid: b0d0ef9008deac547a6c16f14db5fc3c, type: 2}
 --- !u!114 &-139939658126738849
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -75,7 +76,7 @@ MonoBehaviour:
   Values:
   - {fileID: 8013480682184649867}
   - {fileID: 2742703105448441893}
-  - {fileID: 2107338278408515299}
+  - {fileID: 4858691772501387543}
 --- !u!114 &1860129111272753933
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -119,7 +120,22 @@ MonoBehaviour:
   m_Name: Android Settings
   m_EditorClassIdentifier: Unity.AdaptivePerformance:UnityEngine.AdaptivePerformance:AdaptivePerformanceGeneralSettings
   m_LoaderManagerInstance: {fileID: -6014588986669632119}
-  m_InitManagerOnStart: 1
+  m_InitManagerOnStart: 0
+--- !u!114 &3152866106532756029
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Standalone Providers
+  m_EditorClassIdentifier: Unity.AdaptivePerformance:UnityEngine.AdaptivePerformance:AdaptivePerformanceManagerSettings
+  m_AutomaticLoading: 0
+  m_AutomaticRunning: 0
+  m_Loaders: []
 --- !u!114 &3382660032527765782
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -150,6 +166,20 @@ MonoBehaviour:
   m_AutomaticRunning: 0
   m_Loaders:
   - {fileID: 11400000, guid: faa69424363d73c4187b7a5eb43122f3, type: 2}
+--- !u!114 &4858691772501387543
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Standalone Settings
+  m_EditorClassIdentifier: Unity.AdaptivePerformance:UnityEngine.AdaptivePerformance:AdaptivePerformanceGeneralSettings
+  m_LoaderManagerInstance: {fileID: 3152866106532756029}
+  m_InitManagerOnStart: 1
 --- !u!114 &8013480682184649867
 MonoBehaviour:
   m_ObjectHideFlags: 2

@@ -13,6 +13,7 @@ namespace VNCreator
         public Sprite dialogueSpr;
         public string dialogueText;
         public Sprite backgroundSpr;
+        public bool isFade;
         public bool startNode;
         public bool endNode;
         public int choices = 1;

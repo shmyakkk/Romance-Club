@@ -32,6 +32,7 @@ namespace VNCreator
                         dialogueSpr = _node.nodeData.dialogueSpr,
                         dialogueText = _node.nodeData.dialogueText,
                         backgroundSpr = _node.nodeData.backgroundSpr,
+                        isFade = _node.nodeData.isFade,
                         startNode = _node.nodeData.startNode,
                         endNode = _node.nodeData.endNode,
                         choices = _node.nodeData.choices,

@@ -1,0 +1,33 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/index.uss?fileID=7433441132597879392&amp;guid=5fe41971ff49cc74f8be04ab9ad680e3&amp;type=3#index" />
+    <ui:VisualElement name="Panel" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-left: 4%; margin-right: 4%; margin-top: 0; margin-bottom: 0;">
+        <ui:VisualElement name="Header" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+            <ui:Button display-tooltip-when-elided="true" name="OptionsButton" />
+            <ui:VisualElement name="Logo" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); background-image: url(&apos;project://database/Assets/GFX/Logo.png?fileID=2800000&amp;guid=4c5a6f054d3f2ed49a64b871d2229f29&amp;type=3#Logo&apos;); -unity-background-scale-mode: scale-to-fit;" />
+            <ui:Button text="1253" display-tooltip-when-elided="true" name="DiamondButton" class="semiBold16" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Main" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+            <ui:VisualElement name="Cover" style="background-color: rgba(167, 115, 192, 0); align-items: flex-start; background-image: url(&apos;project://database/Assets/GFX/History%20Cover.png?fileID=2800000&amp;guid=691c8465ba20f5643a10fda510482d11&amp;type=3#History Cover&apos;); align-self: auto; justify-content: flex-start; width: auto; height: 395px; -unity-background-scale-mode: scale-to-fit; opacity: 1; visibility: visible; display: flex; overflow: visible;">
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" style="align-self: flex-end;" />
+                <ui:VisualElement name="Achive" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
+                <ui:Label tabindex="-1" text="Это мог быть очередной день сурка, если бы не новое знакомство..." display-tooltip-when-elided="true" name="Describtion" class="light14" style="white-space: normal;" />
+                <ui:Button text="Button" display-tooltip-when-elided="true" name="Play" class="bold18" />
+            </ui:VisualElement>
+            <ui:Label tabindex="-1" text="Работа в кофейне, брошенная учеба, тяжелые отношения. Она не видела перспектив, пока не получила предложение, которое изменило ее жизнь. Добро пожаловать за кулисы модельной индустрии." display-tooltip-when-elided="true" name="Description" class="regular14" style="white-space: normal;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Footer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+            <ui:VisualElement name="Exit" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                <ui:Button display-tooltip-when-elided="true" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="semiBold12" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Dress" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                <ui:Button display-tooltip-when-elided="true" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="semiBold12" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Ad" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                <ui:Button display-tooltip-when-elided="true" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="semiBold12" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

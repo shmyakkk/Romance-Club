@@ -9,6 +9,8 @@ namespace VNCreator
 {
     public class VNCreator_DisplayUI : DisplayBase
     {
+        public Fader fader;
+
         [Header("Start")]
         public GameObject nameSetScreen;
         public GameObject dressScreen;
@@ -57,6 +59,18 @@ namespace VNCreator
 
         void Start()
         {
+            if (!PlayerPrefs.HasKey(ItemsDatabase.Category.Appearance.ToString()))
+                PlayerPrefs.SetInt(ItemsDatabase.Category.Appearance.ToString(), 0);
+
+            if (!PlayerPrefs.HasKey(ItemsDatabase.Category.Dress.ToString()))
+                PlayerPrefs.SetInt(ItemsDatabase.Category.Dress.ToString(), 0);
+
+            if (!PlayerPrefs.HasKey(ItemsDatabase.Category.Hair.ToString()))
+                PlayerPrefs.SetInt(ItemsDatabase.Category.Hair.ToString(), 0);
+
+            if (!PlayerPrefs.HasKey(ItemsDatabase.Category.Accessories.ToString()))
+                PlayerPrefs.SetInt(ItemsDatabase.Category.Accessories.ToString(), 0);
+
             nameSubmitBtn.onClick.AddListener(SubmitName);
             startStoryBtn.onClick.AddListener(StartStory);
 
@@ -74,16 +88,6 @@ namespace VNCreator
             {
                 PlayerPrefs.SetString("PlayerName", "Кейт");
             }
-
-            OpenDressRoom();
-        }
-
-        //edit
-
-        private void OpenDressRoom()
-        {
-            dressScreen.SetActive(true);
-            nameSetScreen.SetActive(false);
         }
 
         private void StartStory()
@@ -108,7 +112,7 @@ namespace VNCreator
             if (choiceBtn4 != null)
                 choiceBtn4.onClick.AddListener(delegate { NextNode(3); });
 
-            StartCoroutine(DisplayCurrentNode());
+            ShowCurrentNode();
         }
 
         protected override void NextNode(int _choiceId)
@@ -120,10 +124,102 @@ namespace VNCreator
             }
 
             base.NextNode(_choiceId);
-            StartCoroutine(DisplayCurrentNode());
+
+            if (currentNode.isFade)
+            {
+                fader.FadeIn(ShowCurrentNode);
+            }
+            else
+            {
+                ShowCurrentNode();
+            }
         }
 
-        IEnumerator DisplayCurrentNode()
+        void ShowCurrentNode()
+        {
+            SetCharacter();
+            SetBG();
+
+            //выборы
+            if (currentNode.choices <= 1)
+            {
+                nextBtn.gameObject.SetActive(true);
+
+                choiceBtn1.gameObject.SetActive(false);
+                choiceBtn2.gameObject.SetActive(false);
+                choiceBtn3.gameObject.SetActive(false);
+                choiceBtn4.gameObject.SetActive(false);
+
+                //previousBtn.gameObject.SetActive(loadList.Count != 1);
+            }
+            else
+            {
+                nextBtn.gameObject.SetActive(false);
+
+                choiceBtn1.gameObject.SetActive(true);
+                choiceBtn1.transform.GetChild(0).GetComponent<Text>().text = currentNode.choiceOptions[0];
+
+                choiceBtn2.gameObject.SetActive(true);
+                choiceBtn2.transform.GetChild(0).GetComponent<Text>().text = currentNode.choiceOptions[1];
+
+                if (currentNode.choices == 3)
+                {
+                    choiceBtn3.gameObject.SetActive(true);
+                    choiceBtn3.transform.GetChild(0).GetComponent<Text>().text = currentNode.choiceOptions[2];
+
+                    if (currentNode.choices == 4)
+                    {
+                        choiceBtn4.gameObject.SetActive(true);
+                        choiceBtn4.transform.GetChild(0).GetComponent<Text>().text = currentNode.choiceOptions[3];
+                    }
+                    else
+                    {
+                        choiceBtn4.gameObject.SetActive(false);
+                    }
+                }
+                else
+                {
+                    choiceBtn3.gameObject.SetActive(false);
+                    choiceBtn4.gameObject.SetActive(false);
+                }
+            }
+
+            StartCoroutine(ShowDialogueText());
+        }
+
+        IEnumerator ShowDialogueText()
+        {
+            dialogueTxt.text = string.Empty;
+            if (GameOptions.isInstantText)
+            {
+                dialogueTxt.text = currentNode.dialogueText;
+            }
+            else
+            {
+                char[] _chars = currentNode.dialogueText.ToCharArray();
+                string fullString = string.Empty;
+                for (int i = 0; i < _chars.Length; i++)
+                {
+                    fullString += _chars[i];
+                    dialogueTxt.text = fullString;
+                    yield return new WaitForSeconds(0.01f/ GameOptions.readSpeed);
+                }
+            }
+        }
+
+        protected override void Previous()
+        {
+            base.Previous();
+            ShowCurrentNode();
+        }
+
+        void ExitGame()
+        {
+            SceneManager.LoadScene(mainMenu, LoadSceneMode.Single);
+        }
+
+
+        void SetCharacter()
         {
             //гг
             if (currentNode.characterName == "гг")
@@ -142,6 +238,7 @@ namespace VNCreator
                         }
                     }
                 }
+                else SetPlayerAppearance();
             }
             //без перса
             else if (currentNode.characterName == "")
@@ -184,7 +281,9 @@ namespace VNCreator
                     }
                 }
             }
-
+        }
+        void SetBG()
+        {
             //задний фон
             if (currentNode.backgroundSpr != null)
                 backgroundImg.sprite = currentNode.backgroundSpr;
@@ -192,83 +291,12 @@ namespace VNCreator
             if (currentNode.dialogueSpr != null)
                 dialogueImg.sprite = currentNode.dialogueSpr;
 
-            //выборы
-            if (currentNode.choices <= 1) 
-            {
-                nextBtn.gameObject.SetActive(true);
-
-                choiceBtn1.gameObject.SetActive(false);
-                choiceBtn2.gameObject.SetActive(false);
-                choiceBtn3.gameObject.SetActive(false);
-                choiceBtn4.gameObject.SetActive(false);
-
-                //previousBtn.gameObject.SetActive(loadList.Count != 1);
-            }
-            else
-            {
-                nextBtn.gameObject.SetActive(false);
-
-                choiceBtn1.gameObject.SetActive(true);
-                choiceBtn1.transform.GetChild(0).GetComponent<Text>().text = currentNode.choiceOptions[0];
-
-                choiceBtn2.gameObject.SetActive(true);
-                choiceBtn2.transform.GetChild(0).GetComponent<Text>().text = currentNode.choiceOptions[1];
-
-                if (currentNode.choices == 3)
-                {
-                    choiceBtn3.gameObject.SetActive(true);
-                    choiceBtn3.transform.GetChild(0).GetComponent<Text>().text = currentNode.choiceOptions[2];
-
-                    if(currentNode.choices == 4)
-                    {
-                        choiceBtn4.gameObject.SetActive(true);
-                        choiceBtn4.transform.GetChild(0).GetComponent<Text>().text = currentNode.choiceOptions[3];
-                    }
-                    else
-                    {
-                        choiceBtn4.gameObject.SetActive(false);
-                    }
-                }
-                else
-                {
-                    choiceBtn3.gameObject.SetActive(false);
-                    choiceBtn4.gameObject.SetActive(false);
-                }
-            }
-
             if (currentNode.backgroundMusic != null)
                 VNCreator_MusicSource.instance.Play(currentNode.backgroundMusic);
             if (currentNode.soundEffect != null)
                 VNCreator_SfxSource.instance.Play(currentNode.soundEffect);
-
-            dialogueTxt.text = string.Empty;
-            if (GameOptions.isInstantText)
-            {
-                dialogueTxt.text = currentNode.dialogueText;
-            }
-            else
-            {
-                char[] _chars = currentNode.dialogueText.ToCharArray();
-                string fullString = string.Empty;
-                for (int i = 0; i < _chars.Length; i++)
-                {
-                    fullString += _chars[i];
-                    dialogueTxt.text = fullString;
-                    yield return new WaitForSeconds(0.01f/ GameOptions.readSpeed);
-                }
-            }
         }
 
-        protected override void Previous()
-        {
-            base.Previous();
-            StartCoroutine(DisplayCurrentNode());
-        }
-
-        void ExitGame()
-        {
-            SceneManager.LoadScene(mainMenu, LoadSceneMode.Single);
-        }
 
         void PlayAnimation(string animationName, Action onAnimationEnd)
         {

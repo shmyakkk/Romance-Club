@@ -119,6 +119,15 @@ namespace VNCreator
                     dialogueSprDiaplay.style.backgroundImage = node.nodeData.dialogueSpr ? node.nodeData.dialogueSpr.texture : null;
                 }
             );
+
+            Toggle fadeField = this.Query<Toggle>("Toggle_Field");
+            fadeField.value = node.nodeData.isFade;
+            fadeField.RegisterValueChangedCallback(
+                e =>
+                {
+                    node.nodeData.isFade = fadeField.value;
+                }
+            );
         }
     }
 #endif
