@@ -1,0 +1,214 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using VNCreator;
+using static UnityEditor.Progress;
+
+public class CharacterScript : MonoBehaviour
+{
+    [SerializeField] private Image appearanceImg;
+    [SerializeField] private Image dressImg;
+    [SerializeField] private Image hairImg;
+    [SerializeField] private Image accessoriesImg;
+
+    public Animator anim;
+    public bool isTalking;
+
+    private Action onAnimationEndCallback;
+
+    private const string IN_LEFT = "In_Left";
+    private const string IN_RIGHT = "In_Right";
+    private const string OUT_LEFT = "Out_Left";
+    private const string OUT_RIGHT = "Out_Right";
+
+    private string previousName;
+    private string currentName;
+
+    public string PreviousName { get => previousName; set => previousName = value; }
+    public string CurrentName { get => currentName; set => currentName = value; }
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        anim = GetComponent<Animator>();
+        isTalking = false;
+    }
+    /*
+    public void PlayAnimation(string _name)
+    {
+        switch (_name)
+        {
+            case "idle":
+                anim.SetTrigger("toIdle");
+                break;
+            case "talk":
+                isTalking = true;
+                anim.SetTrigger("toTalk");
+                break;
+            case "think":
+                anim.SetTrigger("toThink");
+                break;
+        }
+    }*/
+
+    public void SetCharacter(string anim)
+    {
+        //гг
+        if (currentName == "ГГ")
+        {
+            if (previousName != null)
+            {
+                if (previousName != "ГГ")
+                {
+                    if (previousName != "...")
+                    {
+                        PlayAnimation(OUT_RIGHT, delegate { SetPlayerAppearance(anim); });
+                    }
+                    else
+                    {
+                        SetPlayerAppearance(anim);
+                    }
+                }
+            }
+            else SetPlayerAppearance(anim);
+        }
+        //без перса
+        else if (currentName == "...")
+        {
+            return;
+        }
+        //другой перс
+        else
+        {
+            if (previousName != null)
+            {
+                if (previousName == "ГГ")
+                {
+                    PlayAnimation(OUT_LEFT, delegate { SetAnotherCharacterAppearance(anim); });
+                }
+                else if (previousName == "...")
+                {
+                    SetAnotherCharacterAppearance(anim);
+                }
+                else if (currentName != previousName)
+                {
+                    PlayAnimation(OUT_RIGHT, delegate { SetAnotherCharacterAppearance(anim); });
+                }
+            }
+        }
+    }
+
+    void PlayAnimation(string animationName, Action onAnimationEnd)
+    {
+        onAnimationEndCallback = onAnimationEnd;
+        anim.Play(animationName, 0, 0f);
+        StartCoroutine(WaitForAnimationEnd(animationName));
+    }
+
+    IEnumerator WaitForAnimationEnd(string animationName)
+    {
+        while (!anim.GetCurrentAnimatorStateInfo(0).IsName(animationName))
+        {
+            yield return null;
+        }
+
+        float animationLength = anim.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(animationLength);
+
+        if (onAnimationEndCallback != null)
+        {
+            onAnimationEndCallback.Invoke();
+        }
+    }
+
+    void SetPlayerAppearance(string a)
+    {
+        if (PlayerPrefs.HasKey(ItemsDatabase.Category.Appearance.ToString()) && appearanceImg)
+        {
+            var item = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Appearance);
+
+            appearanceImg.sprite = a switch
+            {
+                "удивление" => item.a_surprise,
+                "злость" => item.a_evil,
+                "грусть" => item.a_sad,
+                "спокойствие" => item.a_base,
+                "улыбка" => item.a_smile,
+                "тень" => item.a_shadow,
+                _ => item.sprite,
+            };
+            appearanceImg.enabled = true;
+        }
+
+        if (PlayerPrefs.HasKey(ItemsDatabase.Category.Dress.ToString()) && dressImg)
+        {
+            dressImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Dress).sprite;
+            dressImg.enabled = true;
+        }
+
+        if (PlayerPrefs.HasKey(ItemsDatabase.Category.Hair.ToString()) && hairImg)
+        {
+            hairImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Hair).sprite;
+            hairImg.enabled = true;
+        }
+
+        if (PlayerPrefs.HasKey(ItemsDatabase.Category.Accessories.ToString()) && accessoriesImg)
+            accessoriesImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Accessories).sprite;
+
+        PlayAnimation(IN_LEFT, null);
+    }
+
+    void SetAnotherCharacterAppearance(string a)
+    {
+        var item = Resources.Load<VNCreator.Item>("Items/Other/" + currentName);
+
+        appearanceImg.sprite = a switch
+        {
+            "удивление" => item.a_surprise,
+            "злость" => item.a_evil,
+            "грусть" => item.a_sad,
+            "спокойствие" => item.a_base,
+            "улыбка" => item.a_smile,
+            "тень" => item.a_shadow,
+            _ => item.sprite,
+        };
+
+        appearanceImg.enabled = true;
+        dressImg.enabled = false;
+        hairImg.enabled = false;
+
+        PlayAnimation(IN_RIGHT, null);
+    }
+
+    void SetNone()
+    {
+        appearanceImg.enabled = false;
+        dressImg.enabled = false;
+        hairImg.enabled = false;
+    }
+
+    public void ClearCharacter()
+    {
+        if (previousName != null)
+        {
+            if (previousName != "...")
+            {
+                if (previousName == "ГГ")
+                {
+                    PlayAnimation(OUT_LEFT, SetNone);
+                }
+                else
+                {
+                    PlayAnimation(OUT_RIGHT, SetNone);
+                }
+            }
+        }
+        else
+        {
+            SetNone();
+        }
+    }
+}

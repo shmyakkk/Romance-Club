@@ -10,5 +10,13 @@ namespace VNCreator
         public string category;
         public int Id = 0;
         public Sprite sprite;
+        public Sprite a_base;
+        public Sprite a_dream;
+        public Sprite a_evil;
+        public Sprite a_flirt;
+        public Sprite a_sad;
+        public Sprite a_smile;
+        public Sprite a_surprise;
+        public Sprite a_shadow;
     }
 }

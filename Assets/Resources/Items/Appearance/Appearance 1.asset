@@ -15,3 +15,10 @@ MonoBehaviour:
   category: Appearance
   Id: 0
   sprite: {fileID: 21300000, guid: 26b888774228f7545919ca659fd17b95, type: 3}
+  a_base: {fileID: 21300000, guid: 26b888774228f7545919ca659fd17b95, type: 3}
+  a_dream: {fileID: 21300000, guid: 0335f83b8e98b9b4896597e521933065, type: 3}
+  a_evil: {fileID: 21300000, guid: e821198b4290f9b4aaf79d963b7a417f, type: 3}
+  a_flirt: {fileID: 21300000, guid: 3a2095dd13ceadd418ecc5934bb8e28e, type: 3}
+  a_sad: {fileID: 21300000, guid: 7e5e32288a1576845a3d0d1e8d1ea51e, type: 3}
+  a_smile: {fileID: 21300000, guid: ab1b253d607e73f4dbcf2e05ce1c0238, type: 3}
+  a_surprise: {fileID: 21300000, guid: 30a4e347ad3a4c145af8b0ebd92ba201, type: 3}
