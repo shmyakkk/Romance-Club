@@ -56,48 +56,44 @@ public class CharacterScript : MonoBehaviour
 
     public void SetCharacter(string anim)
     {
-        //гг
-        if (currentName == "ГГ")
+        switch (currentName)
         {
-            if (previousName != null)
-            {
-                if (previousName != "ГГ")
+            case "ГГ":
+                if (previousName != null)
                 {
-                    if (previousName != "...")
+                    if (previousName != "ГГ")
                     {
-                        PlayAnimation(OUT_RIGHT, delegate { SetPlayerAppearance(anim); });
+                        if (previousName != "...")
+                        {
+                            PlayAnimation(OUT_RIGHT, delegate { SetPlayerAppearance(anim); });
+                        }
+                        else
+                        {
+                            SetPlayerAppearance(anim);
+                        }
                     }
-                    else
+                }
+                else SetPlayerAppearance(anim);
+                break;
+            case "...":
+                break;
+            default:
+                if (previousName != null)
+                {
+                    if (previousName == "ГГ")
                     {
-                        SetPlayerAppearance(anim);
+                        PlayAnimation(OUT_LEFT, delegate { SetAnotherCharacterAppearance(anim); });
+                    }
+                    else if (previousName == "...")
+                    {
+                        SetAnotherCharacterAppearance(anim);
+                    }
+                    else if (currentName != previousName)
+                    {
+                        PlayAnimation(OUT_RIGHT, delegate { SetAnotherCharacterAppearance(anim); });
                     }
                 }
-            }
-            else SetPlayerAppearance(anim);
-        }
-        //без перса
-        else if (currentName == "...")
-        {
-            return;
-        }
-        //другой перс
-        else
-        {
-            if (previousName != null)
-            {
-                if (previousName == "ГГ")
-                {
-                    PlayAnimation(OUT_LEFT, delegate { SetAnotherCharacterAppearance(anim); });
-                }
-                else if (previousName == "...")
-                {
-                    SetAnotherCharacterAppearance(anim);
-                }
-                else if (currentName != previousName)
-                {
-                    PlayAnimation(OUT_RIGHT, delegate { SetAnotherCharacterAppearance(anim); });
-                }
-            }
+                break;
         }
     }
 

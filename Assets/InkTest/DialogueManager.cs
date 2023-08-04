@@ -4,18 +4,25 @@ using UnityEngine;
 using Ink.Runtime;
 using Ink.UnityIntegration;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
+using System;
+using VNCreator;
 
 public class DialogueManager : MonoBehaviour
 {
+    public TextAsset inkFile;
+
     [Header("Visuals")]
     [SerializeField] private Image backgroungImg;
 
-    [Header("-")]
+    [Header("Objects")]
     public Button nextBtn;
-    public TextAsset inkFile;
-    public GameObject customButton;
+    public GameObject baseChoiceButton;
+    public GameObject diamondsChoiceButton;
     public GameObject optionPanel;
-    public bool isTalking = false;
+    public GameObject infoPanel;
+    public GameObject dialoguePanel;
+    public GameObject currentDiamondsPanel;
 
     static Story story;
     public Text nameTag;
@@ -30,8 +37,16 @@ public class DialogueManager : MonoBehaviour
     {
         nextBtn.onClick.AddListener(delegate { NextNode(); });
         story = new Story(inkFile.text);
+
+        if (!PlayerPrefs.HasKey("Diamonds"))
+            PlayerPrefs.SetInt("Diamonds", 0);
+
+        PlayerPrefs.SetInt("Diamonds", 15);
+
         tags = new List<string>();
         choiceSelected = null;
+
+        currentDiamondsPanel.SetActive(false);
 
         NextNode();
     }
@@ -65,6 +80,27 @@ public class DialogueManager : MonoBehaviour
     void AdvanceDialogue()
     {
         string currentSentence = story.Continue();
+
+        string namePattern = @"^(.*?)(\s\([^\)]+\))?:\s";
+        string emotionPattern = @"\(([^)]+)\)";
+
+        Match nameMatch = Regex.Match(currentSentence, namePattern);
+        if (nameMatch.Success)
+        {
+            string name = nameMatch.Groups[1].Value.Trim();
+            SetName(name);
+
+            Match emotionMatch = Regex.Match(nameMatch.Groups[2].Value, emotionPattern);
+            if (emotionMatch.Success)
+            {
+                string emotion = emotionMatch.Groups[1].Value.Trim();
+                SetAnimation(emotion);
+            }
+        }
+
+        currentSentence = Regex.Replace(currentSentence, namePattern, string.Empty);
+        currentSentence = Regex.Replace(currentSentence, emotionPattern, string.Empty);
+
         ParseTags();
         StopAllCoroutines();
         StartCoroutine(TypeSentence(currentSentence));
@@ -80,10 +116,6 @@ public class DialogueManager : MonoBehaviour
             yield return null;
         }
         CharacterScript tempSpeaker = GameObject.FindObjectOfType<CharacterScript>();
-        if (tempSpeaker.isTalking)
-        {
-            SetAnimation("idle");
-        }
         yield return null;
     }
 
@@ -95,11 +127,40 @@ public class DialogueManager : MonoBehaviour
 
         for (int i = 0; i < _choices.Count; i++)
         {
-            GameObject temp = Instantiate(customButton, optionPanel.transform);
-            temp.transform.GetChild(0).GetComponent<Text>().text = _choices[i].text;
-            temp.AddComponent<Selectable>();
-            temp.GetComponent<Selectable>().element = _choices[i];
-            temp.GetComponent<Button>().onClick.AddListener(() => { temp.GetComponent<Selectable>().Decide(); });
+            GameObject temp = null;
+
+            string choiceText = _choices[i].text;
+
+            string text = "";
+            int number = 0;
+
+            string pattern = @"^d(\d+)";
+            Match match = Regex.Match(choiceText, pattern);
+
+            if (match.Success)
+            {
+                // Получаем число из совпадения и преобразуем его в int
+                number = int.Parse(match.Groups[1].Value);
+
+                // Удаляем совпадение из строки
+                text = choiceText.Remove(match.Index, match.Length).Trim();
+
+                temp = Instantiate(diamondsChoiceButton, optionPanel.transform);
+
+                currentDiamondsPanel.SetActive(true);
+                currentDiamondsPanel.GetComponentInChildren<Text>().text = PlayerPrefs.GetInt("Diamonds").ToString();
+            }
+            else
+            {
+                text = choiceText;
+
+                temp = Instantiate(baseChoiceButton, optionPanel.transform);
+            }
+
+            Selectable selectable = temp.GetComponent<Selectable>();
+            selectable.SetParameters(text, number);
+            selectable.element = _choices[i];
+            temp.GetComponent<Button>().onClick.AddListener(() => { selectable.Decide(); });
         }
 
         optionPanel.SetActive(true);
@@ -120,6 +181,7 @@ public class DialogueManager : MonoBehaviour
     void AdvanceFromDecision()
     {
         optionPanel.SetActive(false);
+        currentDiamondsPanel.SetActive(false);
         for (int i = 0; i < optionPanel.transform.childCount; i++)
         {
             Destroy(optionPanel.transform.GetChild(i).gameObject);
@@ -136,19 +198,17 @@ public class DialogueManager : MonoBehaviour
         tags = story.currentTags;
         foreach (string t in tags)
         {
+            string[] words = t.Split(' ');
             string prefix = t.Split(' ')[0];
-            string param = t.Split(' ')[1];
+            string param = string.Join(" ", words, 1, words.Length - 1);
 
             switch (prefix.ToLower())
             {
-                case "name":
-                    SetName(param);
-                    break;
-                case "anim":
-                    SetAnimation(param);
-                    break;
                 case "bg":
                     SetBG(param);
+                    break;
+                case "info":
+                    SetInfo(param);
                     break;
             }
         }
@@ -159,18 +219,23 @@ public class DialogueManager : MonoBehaviour
         cs.PreviousName = cs.CurrentName;
         cs.CurrentName = _name;
 
+        Animator dialogueAnim = dialoguePanel.GetComponent<Animator>();
+
         switch (_name)
         {
             case "ГГ":
                 if (PlayerPrefs.HasKey("PlayerName"))
                     nameTag.text = PlayerPrefs.GetString("PlayerName");
+                dialogueAnim.Play("left");
                 break;
-            case "...":
+            case "..":
                 cs.ClearCharacter();
-                nameTag.text = _name;
+                nameTag.text = "...";
+                dialogueAnim.Play("middle");
                 break;
             default:
                 nameTag.text = _name;
+                dialogueAnim.Play("right");
                 break;
         }
     }
@@ -183,5 +248,13 @@ public class DialogueManager : MonoBehaviour
     void SetBG(string _bg)
     {
         backgroungImg.sprite = Resources.Load<Sprite>("BG/" + _bg);
+    }
+
+    void SetInfo(string _text)
+    {
+        Animator anim = infoPanel.GetComponent<Animator>();
+        infoPanel.GetComponentInChildren<UnityEngine.UI.Text>().text = _text;
+
+        anim.SetTrigger("show");
     }
 }
