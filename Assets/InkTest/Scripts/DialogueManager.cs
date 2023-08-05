@@ -129,7 +129,8 @@ public class DialogueManager : MonoBehaviour
 
         ParseTags();
         StopAllCoroutines();
-        StartCoroutine(TypeSentence(currentSentence));
+        //StartCoroutine(TypeSentence(currentSentence));
+        StartCoroutine(GameManager.Instance.TypeSentence(currentSentence));
     }
 
     // Type out the sentence letter by letter and make character idle if they were talking
@@ -141,7 +142,6 @@ public class DialogueManager : MonoBehaviour
             message.text += letter;
             yield return null;
         }
-        CharacterScript tempSpeaker = GameObject.FindObjectOfType<CharacterScript>();
         yield return null;
     }
 
