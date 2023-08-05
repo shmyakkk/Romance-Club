@@ -20,9 +20,14 @@ public class DialogueManager : MonoBehaviour
     public GameObject baseChoiceButton;
     public GameObject diamondsChoiceButton;
     public GameObject optionPanel;
-    public GameObject infoPanel;
+
     public GameObject dialoguePanel;
     public GameObject currentDiamondsPanel;
+
+    [Header("Info")]
+    public GameObject infoPanel;
+    public GameObject infoProfessionalism;
+    public GameObject infoScandal;
 
     static Story story;
     public Text nameTag;
@@ -38,10 +43,16 @@ public class DialogueManager : MonoBehaviour
         nextBtn.onClick.AddListener(delegate { NextNode(); });
         story = new Story(inkFile.text);
 
+        story.ObserveVariable("professionalism", (string varName, object newValue) => {
+        SetProfessionalism((int)newValue);
+        });
+
+        story.ObserveVariable("scandal", (string varName, object newValue) => {
+            SetScandal((int)newValue);
+        });
+
         if (!PlayerPrefs.HasKey("Diamonds"))
             PlayerPrefs.SetInt("Diamonds", 0);
-
-        PlayerPrefs.SetInt("Diamonds", 15);
 
         tags = new List<string>();
         choiceSelected = null;
@@ -49,6 +60,21 @@ public class DialogueManager : MonoBehaviour
         currentDiamondsPanel.SetActive(false);
 
         NextNode();
+    }
+
+    private void SetProfessionalism(int newValue)
+    {
+        Animator anim = infoProfessionalism.GetComponent<Animator>();
+        infoProfessionalism.GetComponentInChildren<UnityEngine.UI.Text>().text = "+" + newValue.ToString() + " Профессионализм";
+
+        anim.SetTrigger("show");
+    }
+    private void SetScandal(int newValue)
+    {
+        Animator anim = infoScandal.GetComponent<Animator>();
+        infoScandal.GetComponentInChildren<UnityEngine.UI.Text>().text = "+" + newValue.ToString() + " Скандал";
+
+        anim.SetTrigger("show");
     }
 
     private void NextNode()
