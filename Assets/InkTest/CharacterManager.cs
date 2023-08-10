@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using VNCreator;
 using static UnityEditor.Progress;
 
-public class CharacterScript : MonoBehaviour
+public class CharacterManager : MonoBehaviour
 {
     [SerializeField] private Image appearanceImg;
     [SerializeField] private Image dressImg;

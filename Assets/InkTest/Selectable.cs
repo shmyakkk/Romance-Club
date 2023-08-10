@@ -34,7 +34,7 @@ public class Selectable : MonoBehaviour
                 PlayerPrefs.SetInt("Diamonds", currentDiamonds - neededDiamonds);
             }
                
-            DialogueManager.SetDecision(element);
+            StoryManager.SetDecision(element);
         }
     }
 }
