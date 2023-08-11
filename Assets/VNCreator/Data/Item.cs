@@ -9,6 +9,7 @@ namespace VNCreator
     {
         public string category;
         public int Id = 0;
+        public bool isEnabled = false;
         public Sprite sprite;
         public Sprite a_base;
         public Sprite a_dream;

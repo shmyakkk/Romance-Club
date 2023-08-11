@@ -14,4 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: Hair
   Id: 6
+  isEnabled: 1
   sprite: {fileID: 21300000, guid: c9f5356f6a83f3949b59dbe08652e60d, type: 3}
+  a_base: {fileID: 0}
+  a_dream: {fileID: 0}
+  a_evil: {fileID: 0}
+  a_flirt: {fileID: 0}
+  a_sad: {fileID: 0}
+  a_smile: {fileID: 0}
+  a_surprise: {fileID: 0}
+  a_shadow: {fileID: 0}

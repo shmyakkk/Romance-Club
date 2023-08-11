@@ -4,6 +4,8 @@ VAR diamonds = 0
 VAR professionalism = 0
 VAR scandal = 0
 
+VAR dress = 0
+
 === function alter(ref x, k) ===
     ~ x = x + k
 
@@ -140,18 +142,20 @@ VAR scandal = 0
 ГГ (улыбка): Хорошо, что здесь некому на меня орать.
 #bg cafe_morning
 ..: Медленно ты начала рутинное открытие.
-ГГ (спокойствие): Сначала надо надеть фартук.
+ГГ (спокойствие): Сначала надо надеть фартук.dress
     -> choise_5
-    
+
 === choise_5 ===
-    * [Бариста] -> barista
-    * [Кофе-мастер] -> coffee_master
+    * [dress1 Бариста] -> barista
+    * [dress2 Кофе-мастер] -> coffee_master
     
 = barista
+~ dress = 1
 ГГ (улыбка): Пора за работу.
     -> part_6
     
 = coffee_master
+~ dress = 2
 ГГ (улыбка): Как же я люблю этот фартук.
     -> part_6
  

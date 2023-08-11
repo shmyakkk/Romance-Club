@@ -36,23 +36,12 @@ public class CharacterManager : MonoBehaviour
         anim = GetComponent<Animator>();
         isTalking = false;
     }
-    /*
-    public void PlayAnimation(string _name)
+
+    public void ChangeDress()
     {
-        switch (_name)
-        {
-            case "idle":
-                anim.SetTrigger("toIdle");
-                break;
-            case "talk":
-                isTalking = true;
-                anim.SetTrigger("toTalk");
-                break;
-            case "think":
-                anim.SetTrigger("toThink");
-                break;
-        }
-    }*/
+        dressImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Dress).sprite;
+        dressImg.enabled = true;
+    }
 
     public void SetCharacter(string anim)
     {

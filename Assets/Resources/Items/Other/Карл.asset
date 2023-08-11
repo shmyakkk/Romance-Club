@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 
   Id: 0
+  isEnabled: 1
   sprite: {fileID: 21300000, guid: 1703745311dde344698f5e95646acf02, type: 3}
   a_base: {fileID: 21300000, guid: 1703745311dde344698f5e95646acf02, type: 3}
   a_dream: {fileID: 0}

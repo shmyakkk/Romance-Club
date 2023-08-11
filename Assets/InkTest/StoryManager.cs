@@ -31,8 +31,18 @@ public class StoryManager : MonoBehaviour
     List<string> tags;
     static Choice choiceSelected;
 
+    [Header("Dress Choices")]
+    [SerializeField] private GameObject dressChoices;
+    [SerializeField] private Button leftBtn;
+    [SerializeField] private Button rightBtn;
+    public GameObject dressBaseChoiceButton;
+    public GameObject dressDiamondsChoiceButton;
+    public GameObject dressOptionPanel;
+
+    [Header("Scripts")]
     [SerializeField] private CharacterManager characterManager;
     [SerializeField] private DialogueManager dialogueManager;
+
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +56,11 @@ public class StoryManager : MonoBehaviour
 
         story.ObserveVariable("scandal", (string varName, object newValue) => {
             SetScandal((int)newValue);
+        });
+
+        story.ObserveVariable("dress", (string varName, object newValue) => {
+            PlayerPrefs.SetInt("Dress", (int)newValue);
+            characterManager.ChangeDress();
         });
 
         if (!PlayerPrefs.HasKey("Diamonds"))
@@ -77,12 +92,19 @@ public class StoryManager : MonoBehaviour
         //Is there more to the story?
         if (story.canContinue)
         {
-            AdvanceDialogue();
+            bool isDressChoice = AdvanceDialogue();
 
             //Are there any choices?
             if (story.currentChoices.Count != 0)
             {
-                StartCoroutine(ShowChoices());
+                if (isDressChoice)
+                {
+                    StartCoroutine(ShowDressChoices());
+                }
+                else
+                {
+                    StartCoroutine(ShowChoices());
+                }
             }
         }
         else
@@ -98,12 +120,13 @@ public class StoryManager : MonoBehaviour
     }
 
     // Advance through the story 
-    void AdvanceDialogue()
+    bool AdvanceDialogue()
     {
         string currentSentence = story.Continue();
 
         string namePattern = @"^(.*?)(\s\([^\)]+\))?:\s";
         string emotionPattern = @"\(([^)]+)\)";
+        string dressPattern = @"dress";
 
         Match nameMatch = Regex.Match(currentSentence, namePattern);
         if (nameMatch.Success)
@@ -119,12 +142,24 @@ public class StoryManager : MonoBehaviour
             }
         }
 
+        Match dressMatch = Regex.Match(currentSentence, dressPattern);
+
         currentSentence = Regex.Replace(currentSentence, namePattern, string.Empty);
         currentSentence = Regex.Replace(currentSentence, emotionPattern, string.Empty);
+        currentSentence = Regex.Replace(currentSentence, dressPattern, string.Empty);
 
         ParseTags();
-        
-        dialogueManager.SetText(currentSentence);
+
+        if (dressMatch.Success)
+        {
+            dressChoices.GetComponentInChildren<Text>().text = currentSentence;
+            return true;
+        }
+        else
+        {
+            dialogueManager.SetText(currentSentence);
+            return false;
+        }
     }
 
 
@@ -189,6 +224,10 @@ public class StoryManager : MonoBehaviour
     // After a choice was made, turn off the panel and advance from that choice
     void AdvanceFromDecision()
     {
+        ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Dress).isEnabled = true;
+
+        dialogueManager.SetDialogueActive(true);
+        dressChoices.SetActive(false);
         optionPanel.SetActive(false);
 
         dialogueManager.SetDiamonds(false);
@@ -249,5 +288,117 @@ public class StoryManager : MonoBehaviour
         infoPanel.GetComponentInChildren<UnityEngine.UI.Text>().text = _text;
 
         anim.SetTrigger("show");
+    }
+
+    private int currentDress = 0;
+    private List<Choice> dressChoicesList = null;
+    IEnumerator ShowDressChoices()
+    {
+        dressChoices.SetActive(true);
+        dialogueManager.SetDialogueActive(false);
+
+        dressChoicesList = story.currentChoices;
+        currentDress = 0;
+
+        leftBtn.onClick.AddListener(PreviousDress);
+        rightBtn.onClick.AddListener(NextDress);
+
+        SetChoice(dressChoicesList, currentDress);
+
+        yield return new WaitUntil(() => { return choiceSelected != null; });
+
+        AdvanceFromDecision();
+    }
+
+    void NextDress()
+    {
+        if (dressOptionPanel.GetComponentInChildren<Selectable>().gameObject)
+            Destroy(dressOptionPanel.GetComponentInChildren<Selectable>().gameObject);
+
+        if (currentDress == dressChoicesList.Count - 1)
+        {
+            SetChoice(dressChoicesList, 0);
+            currentDress = 0;
+        }
+        else
+        {
+            SetChoice(dressChoicesList, currentDress + 1);
+            currentDress += 1;
+        }
+
+        characterManager.ChangeDress();
+    }
+
+    void PreviousDress()
+    {
+        if (dressOptionPanel.GetComponentInChildren<Selectable>().gameObject)
+            Destroy(dressOptionPanel.GetComponentInChildren<Selectable>().gameObject);
+
+        if (currentDress == 0)
+        {
+            SetChoice(dressChoicesList, dressChoicesList.Count - 1);
+            currentDress = dressChoicesList.Count - 1;
+        }
+        else
+        {
+            SetChoice(dressChoicesList, currentDress - 1);
+            currentDress -= 1;
+        }
+        characterManager.ChangeDress();
+
+    }
+
+    void SetChoice(List<Choice> choices, int i)
+    {
+        GameObject temp = null;
+
+        string choiceText = choices[i].text;
+
+        string text = "";
+        int number = 0;
+
+        string diamondsPattern = @"^d(\d+)";
+
+        Match diamondsMatch = Regex.Match(choiceText, diamondsPattern);
+
+
+        string dressPattern = @"dress\d+";
+        Regex regex = new Regex(dressPattern);
+
+        MatchCollection matches = regex.Matches(choiceText);
+        foreach (Match match in matches)
+        {
+            string matchValue = match.Value;
+            int id = int.Parse(matchValue.Substring(5)); // Преобразование числа в int
+
+            choiceText = choiceText.Replace(matchValue, ""); // Удаление подстроки из строки
+            choiceText = choiceText.Trim(); // Удаление лишних пробелов
+
+            PlayerPrefs.SetInt("Dress", id);
+        }
+
+        if (diamondsMatch.Success)
+        {
+            // Получаем число из совпадения и преобразуем его в int
+            number = int.Parse(diamondsMatch.Groups[1].Value);
+
+            // Удаляем совпадение из строки
+            text = choiceText.Remove(diamondsMatch.Index, diamondsMatch.Length).Trim();
+
+            temp = Instantiate(dressDiamondsChoiceButton, dressOptionPanel.transform);
+
+            //dialogueManager.SetDiamonds(true);
+        }
+        else
+        {
+            text = choiceText;
+
+            temp = Instantiate(dressBaseChoiceButton, dressOptionPanel.transform);
+        }
+
+        Selectable selectable = temp.GetComponent<Selectable>();
+        selectable.SetParameters(text, number);
+        selectable.element = choices[i];
+        temp.GetComponent<Button>().onClick.AddListener(() => { selectable.Decide(); });
     }
 }

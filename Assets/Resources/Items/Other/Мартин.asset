@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b88a7765caed6444a183a760db3cc8d, type: 3}
+  m_Name: "\u041C\u0430\u0440\u0442\u0438\u043D"
+  m_EditorClassIdentifier: 
+  category: 
+  Id: 0
+  isEnabled: 1
+  sprite: {fileID: 21300000, guid: f729c107e50f889489fcdc7ed06bf2a1, type: 3}
+  a_base: {fileID: 21300000, guid: f729c107e50f889489fcdc7ed06bf2a1, type: 3}
+  a_dream: {fileID: 0}
+  a_evil: {fileID: 21300000, guid: 239526ebd638cae408ed901b53bdd9a3, type: 3}
+  a_flirt: {fileID: 21300000, guid: 512b276d541681a4d8e4581a6938f0ce, type: 3}
+  a_sad: {fileID: 21300000, guid: 548c5444fa4463f47ab21d32ffec5946, type: 3}
+  a_smile: {fileID: 21300000, guid: 292f5bfe66fb2ad459e848326b9b37f5, type: 3}
+  a_surprise: {fileID: 21300000, guid: 126aa4ea611d7e7429e031386f22a216, type: 3}
+  a_shadow: {fileID: 0}

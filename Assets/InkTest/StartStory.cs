@@ -54,7 +54,7 @@ public class StartStory : MonoBehaviour
         dressBtn.gameObject.SetActive(false);
         dressBG.SetActive(false);
 
-        dialogueManager.Hide();
+        dialogueManager.SetDialogueActive(false);
     }
 
     private void SubmitName()
@@ -76,7 +76,7 @@ public class StartStory : MonoBehaviour
     private void OpenDress()
     {
         dressScreen.SetActive(true);
-        dialogueManager.Hide();
+        dialogueManager.SetDialogueActive(false);
         dressBG.SetActive(true);
     }
 

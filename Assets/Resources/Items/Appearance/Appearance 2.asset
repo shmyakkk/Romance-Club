@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: Appearance
   Id: 1
+  isEnabled: 1
   sprite: {fileID: 21300000, guid: 23ec144938a6c7944bc94f86e2aad4a4, type: 3}
   a_base: {fileID: 21300000, guid: 23ec144938a6c7944bc94f86e2aad4a4, type: 3}
   a_dream: {fileID: 21300000, guid: fd7fc9f496d42144da3bd97199e0b8b7, type: 3}
@@ -22,3 +23,4 @@ MonoBehaviour:
   a_sad: {fileID: 21300000, guid: 7dd0a03f8f4ff5e4a9e6495c1217d920, type: 3}
   a_smile: {fileID: 21300000, guid: 57a4879de10d4484ab81cc6be1bac879, type: 3}
   a_surprise: {fileID: 21300000, guid: 1c13928d8257d6d469e4ac9460272605, type: 3}
+  a_shadow: {fileID: 0}

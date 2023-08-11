@@ -44,6 +44,8 @@ namespace VNCreator
 
             foreach (Item item in items)
             {
+                if (item.isEnabled == false) continue;
+
                 Vector2 position = new(xPos, 0);
                 var tileObject = Instantiate(itemPrefab, gameObject.transform);
                 var tile = tileObject.GetComponent<ContentItemUI>();
@@ -57,7 +59,7 @@ namespace VNCreator
                 xPos += 220;
             }
 
-            StretchScrollViewContent();
+            Invoke(nameof(StretchScrollViewContent), 0.1f);
         }
 
         private void DeleteItems()

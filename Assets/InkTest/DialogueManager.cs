@@ -61,7 +61,7 @@ public class DialogueManager : MonoBehaviour
         yield return null;
     }
 
-    public void Hide() => gameObject.SetActive(false);
+    public void SetDialogueActive(bool isActive) => gameObject.SetActive(isActive);
 
     public void Show(string name, string sentence)
     {
