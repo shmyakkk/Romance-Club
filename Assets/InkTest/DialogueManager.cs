@@ -11,7 +11,11 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject currentDiamondsPanel;
     [SerializeField] private CharacterManager characterManager;
 
-    public void SetText(string currentSentence) => StartCoroutine(TypeSentence(currentSentence));
+    public void SetText(string currentSentence)
+    {
+        StopAllCoroutines();
+        StartCoroutine(TypeSentence(currentSentence));
+    }
 
     public void SetName(string _name)
     {
@@ -55,5 +59,14 @@ public class DialogueManager : MonoBehaviour
         }
         CharacterManager tempSpeaker = GameObject.FindObjectOfType<CharacterManager>();
         yield return null;
+    }
+
+    public void Hide() => gameObject.SetActive(false);
+
+    public void Show(string name, string sentence)
+    {
+        gameObject.SetActive(true);
+        SetName(name);
+        SetText(sentence);
     }
 }

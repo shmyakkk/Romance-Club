@@ -6798,7 +6798,7 @@ MonoBehaviour:
   optionsMenuBtn: {fileID: 650145815}
   storeMenuBtn: {fileID: 113070404}
   quitBtn: {fileID: 220043226}
-  playScene: Assets/Scenes/Story.unity
+  playScene: Assets/Scenes/Game.unity
   storeMenu: {fileID: 353081808}
   optionsMenu: {fileID: 1277254014}
   mainMenu: {fileID: 1156977973}

@@ -55,8 +55,6 @@ public class StoryManager : MonoBehaviour
         choiceSelected = null;
 
         dialogueManager.SetDiamonds(false);
-
-        NextNode();
     }
 
     private void SetProfessionalism(int newValue)
@@ -74,7 +72,7 @@ public class StoryManager : MonoBehaviour
         anim.SetTrigger("show");
     }
 
-    private void NextNode()
+    public void NextNode()
     {
         //Is there more to the story?
         if (story.canContinue)
@@ -125,7 +123,7 @@ public class StoryManager : MonoBehaviour
         currentSentence = Regex.Replace(currentSentence, emotionPattern, string.Empty);
 
         ParseTags();
-        StopAllCoroutines();
+        
         dialogueManager.SetText(currentSentence);
     }
 
@@ -232,7 +230,7 @@ public class StoryManager : MonoBehaviour
         characterManager.PreviousName = characterManager.CurrentName;
         characterManager.CurrentName = _name;
 
-        dialogueManager.SetName(characterManager.CurrentName);
+        dialogueManager.SetName(_name);
     }
 
     void SetAnimation(string _name)

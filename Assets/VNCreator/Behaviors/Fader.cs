@@ -15,6 +15,7 @@ namespace VNCreator
 
         public void FadeIn(Action onAnimationEnd)
         {
+            StopAllCoroutines();
             onAnimationEndCallback = onAnimationEnd;
             faderAnimator.Play(FADE_IN, 0, 0f);
             StartCoroutine(WaitForAnimationEnd(FADE_IN));
