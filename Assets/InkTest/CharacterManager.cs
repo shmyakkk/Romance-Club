@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using VNCreator;
-using static UnityEditor.Progress;
 
 public class CharacterManager : MonoBehaviour
 {
@@ -123,6 +122,7 @@ public class CharacterManager : MonoBehaviour
                 "спокойствие" => item.a_base,
                 "улыбка" => item.a_smile,
                 "тень" => item.a_shadow,
+                "флирт" => item.a_flirt,
                 _ => item.sprite,
             };
             appearanceImg.enabled = true;
@@ -158,6 +158,7 @@ public class CharacterManager : MonoBehaviour
             "спокойствие" => item.a_base,
             "улыбка" => item.a_smile,
             "тень" => item.a_shadow,
+            "флирт" => item.a_flirt,
             _ => item.sprite,
         };
 

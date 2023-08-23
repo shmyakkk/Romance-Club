@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
+using VNCreator;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -51,14 +53,22 @@ public class DialogueManager : MonoBehaviour
     // Type out the sentence letter by letter and make character idle if they were talking
     private IEnumerator TypeSentence(string sentence)
     {
-        message.text = "";
-        foreach (char letter in sentence.ToCharArray())
+        message.text = string.Empty;
+        if (GameOptions.isInstantText)
         {
-            message.text += letter;
-            yield return null;
+            message.text = sentence;
         }
-        CharacterManager tempSpeaker = GameObject.FindObjectOfType<CharacterManager>();
-        yield return null;
+        else
+        {
+            char[] _chars = sentence.ToCharArray();
+            string fullString = string.Empty;
+            for (int i = 0; i < _chars.Length; i++)
+            {
+                fullString += _chars[i];
+                message.text = fullString;
+                yield return new WaitForSeconds(0.01f / GameOptions.readSpeed);
+            }
+        }
     }
 
     public void SetDialogueActive(bool isActive) => gameObject.SetActive(isActive);

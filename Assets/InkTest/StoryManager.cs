@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Ink.Runtime;
-using Ink.UnityIntegration;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
 using System;
@@ -10,12 +9,13 @@ using VNCreator;
 
 public class StoryManager : MonoBehaviour
 {
+
     public TextAsset inkFile;
 
     [Header("Visuals")]
     [SerializeField] private Image backgroungImg;
 
-    [Header("Objects")]
+    [Header("Main")]
     public Button nextBtn;
     public GameObject baseChoiceButton;
     public GameObject diamondsChoiceButton;
@@ -25,6 +25,11 @@ public class StoryManager : MonoBehaviour
     public GameObject infoPanel;
     public GameObject infoProfessionalism;
     public GameObject infoScandal;
+
+    [Header("Object Panel")]
+    [SerializeField] private GameObject objectPanel;
+    [SerializeField] private Text objectName;
+    [SerializeField] private Button getBtn;
 
     static Story story;
     
@@ -92,18 +97,22 @@ public class StoryManager : MonoBehaviour
         //Is there more to the story?
         if (story.canContinue)
         {
-            bool isDressChoice = AdvanceDialogue();
+            int choiceOption = AdvanceDialogue();
 
             //Are there any choices?
             if (story.currentChoices.Count != 0)
             {
-                if (isDressChoice)
+                switch (choiceOption)
                 {
-                    StartCoroutine(ShowDressChoices());
-                }
-                else
-                {
-                    StartCoroutine(ShowChoices());
+                    case 1:
+                        StartCoroutine(ShowChoices());
+                        break;
+                    case 2:
+                        StartCoroutine(ShowDressChoices());
+                        break;
+                    case 3:
+                        StartCoroutine(ShowObjectsChoices());
+                        break;
                 }
             }
         }
@@ -120,13 +129,14 @@ public class StoryManager : MonoBehaviour
     }
 
     // Advance through the story 
-    bool AdvanceDialogue()
+    int AdvanceDialogue()
     {
         string currentSentence = story.Continue();
 
         string namePattern = @"^(.*?)(\s\([^\)]+\))?:\s";
         string emotionPattern = @"\(([^)]+)\)";
         string dressPattern = @"dress";
+        string objectPattern = @"object";
 
         Match nameMatch = Regex.Match(currentSentence, namePattern);
         if (nameMatch.Success)
@@ -143,22 +153,28 @@ public class StoryManager : MonoBehaviour
         }
 
         Match dressMatch = Regex.Match(currentSentence, dressPattern);
+        Match objectsMatch = Regex.Match(currentSentence, objectPattern);
 
         currentSentence = Regex.Replace(currentSentence, namePattern, string.Empty);
         currentSentence = Regex.Replace(currentSentence, emotionPattern, string.Empty);
         currentSentence = Regex.Replace(currentSentence, dressPattern, string.Empty);
+        currentSentence = Regex.Replace(currentSentence, objectPattern, string.Empty);
 
         ParseTags();
 
         if (dressMatch.Success)
         {
             dressChoices.GetComponentInChildren<Text>().text = currentSentence;
-            return true;
+            return 2;
+        }
+        if (objectsMatch.Success)
+        {
+            return 3;
         }
         else
         {
             dialogueManager.SetText(currentSentence);
-            return false;
+            return 1;
         }
     }
 
@@ -229,6 +245,7 @@ public class StoryManager : MonoBehaviour
         dialogueManager.SetDialogueActive(true);
         dressChoices.SetActive(false);
         optionPanel.SetActive(false);
+        objectPanel.SetActive(false);
 
         dialogueManager.SetDiamonds(false);
 
@@ -240,9 +257,6 @@ public class StoryManager : MonoBehaviour
         AdvanceDialogue();
     }
 
-    /*** Tag Parser ***/
-    /// In Inky, you can use tags which can be used to cue stuff in a game.
-    /// This is just one way of doing it. Not the only method on how to trigger events. 
     void ParseTags()
     {
         tags = story.currentTags;
@@ -289,6 +303,7 @@ public class StoryManager : MonoBehaviour
 
         anim.SetTrigger("show");
     }
+
 
     private int currentDress = 0;
     private List<Choice> dressChoicesList = null;
@@ -400,5 +415,28 @@ public class StoryManager : MonoBehaviour
         selectable.SetParameters(text, number);
         selectable.element = choices[i];
         temp.GetComponent<Button>().onClick.AddListener(() => { selectable.Decide(); });
+    }
+
+    IEnumerator ShowObjectsChoices()
+    {
+        SetName("..");
+        characterManager.ClearCharacter();
+
+        objectPanel.SetActive(true);
+        dialogueManager.SetDialogueActive(false);
+
+        List<Choice> _choices = story.currentChoices;
+        string choiceText = _choices[0].text;
+
+        objectPanel.GetComponent<Image>().sprite = Resources.Load<Sprite>("Object/" + choiceText);
+
+        Selectable selectable = getBtn.GetComponent<Selectable>();
+        selectable.SetParameters(choiceText, 0);
+        selectable.element = _choices[0];
+        getBtn.GetComponent<Button>().onClick.AddListener(() => { selectable.Decide(); });
+
+        yield return new WaitUntil(() => { return choiceSelected != null; });
+
+        AdvanceFromDecision();
     }
 }
