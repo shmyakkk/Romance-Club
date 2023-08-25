@@ -24,9 +24,11 @@ public class CharacterManager : MonoBehaviour
 
     private string previousName;
     private string currentName;
+    private string currentEmotion;
 
     public string PreviousName { get => previousName; set => previousName = value; }
     public string CurrentName { get => currentName; set => currentName = value; }
+    public string CurrentEmotion { get => currentEmotion; set => currentEmotion = value; }
 
 
     // Start is called before the first frame update
@@ -108,8 +110,10 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
-    void SetPlayerAppearance(string a)
+    private void SetPlayerAppearance(string a)
     {
+        currentEmotion = a;
+
         if (PlayerPrefs.HasKey(ItemsDatabase.Category.Appearance.ToString()) && appearanceImg)
         {
             var item = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Appearance);
@@ -144,6 +148,41 @@ public class CharacterManager : MonoBehaviour
             accessoriesImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Accessories).sprite;
 
         PlayAnimation(IN_LEFT, null);
+    }
+
+    public void UpdateCharacterApperance(string a)
+    {
+        if (PlayerPrefs.HasKey(ItemsDatabase.Category.Appearance.ToString()) && appearanceImg)
+        {
+            var item = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Appearance);
+
+            appearanceImg.sprite = a switch
+            {
+                "удивление" => item.a_surprise,
+                "злость" => item.a_evil,
+                "грусть" => item.a_sad,
+                "спокойствие" => item.a_base,
+                "улыбка" => item.a_smile,
+                "тень" => item.a_shadow,
+                "флирт" => item.a_flirt,
+                _ => item.sprite,
+            };
+            appearanceImg.enabled = true;
+        }
+        if (PlayerPrefs.HasKey(ItemsDatabase.Category.Dress.ToString()) && dressImg)
+        {
+            dressImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Dress).sprite;
+            dressImg.enabled = true;
+        }
+
+        if (PlayerPrefs.HasKey(ItemsDatabase.Category.Hair.ToString()) && hairImg)
+        {
+            hairImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Hair).sprite;
+            hairImg.enabled = true;
+        }
+
+        if (PlayerPrefs.HasKey(ItemsDatabase.Category.Accessories.ToString()) && accessoriesImg)
+            accessoriesImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Accessories).sprite;
     }
 
     void SetAnotherCharacterAppearance(string a)

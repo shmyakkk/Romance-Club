@@ -10,6 +10,7 @@ public class StartStory : MonoBehaviour
     [Header("Screens")]
     public GameObject startedScreen;
     public GameObject dressScreen;
+    public GameObject UI;
     public GameObject bgScreen;
     public GameObject dressBG;
     public GameObject storyBG;
@@ -31,6 +32,9 @@ public class StartStory : MonoBehaviour
 
     private void Start()
     {
+        PlayerPrefs.SetInt("Professionalism", 0);
+        PlayerPrefs.SetInt("Scandal", 0);
+
         if (!PlayerPrefs.HasKey(ItemsDatabase.Category.Appearance.ToString()))
             PlayerPrefs.SetInt(ItemsDatabase.Category.Appearance.ToString(), 0);
 
@@ -82,12 +86,16 @@ public class StartStory : MonoBehaviour
 
     private void Continue()
     {
+        UI.SetActive(true);
+
         dressScreen.SetActive(false);
         dialogueManager.Show("ГГ", "Выгляжу отлично. Пора начинать!");
         characterManager.CurrentName = "ГГ";
         characterManager.SetCharacter("спокойствие");
         bgScreen.SetActive(false);
         startStoryBtn.gameObject.SetActive(true);
+
+        continueBtn.onClick.RemoveListener(Continue);
     }
 
     private void Fade()
@@ -97,6 +105,8 @@ public class StartStory : MonoBehaviour
 
     private void StartPlot()
     {
+        continueBtn.onClick.AddListener(storyManager.CloseDress);
+
         dressScreen.SetActive(false);
         dressBG.SetActive(false);
         storyBG.SetActive(true);

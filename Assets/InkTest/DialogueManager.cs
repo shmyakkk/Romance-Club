@@ -66,7 +66,7 @@ public class DialogueManager : MonoBehaviour
             {
                 fullString += _chars[i];
                 message.text = fullString;
-                yield return new WaitForSeconds(0.01f / GameOptions.readSpeed);
+                yield return new WaitForSeconds(0.0001f);
             }
         }
     }

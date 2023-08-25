@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Text.RegularExpressions;
 using System;
 using VNCreator;
+using UnityEngine.SceneManagement;
 
 public class StoryManager : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class StoryManager : MonoBehaviour
     public GameObject baseChoiceButton;
     public GameObject diamondsChoiceButton;
     public GameObject optionPanel;
+    public Button dressBtn;
+    public GameObject UI;
+
 
     [Header("Info")]
     public GameObject infoPanel;
@@ -29,7 +33,9 @@ public class StoryManager : MonoBehaviour
     [Header("Object Panel")]
     [SerializeField] private GameObject objectPanel;
     [SerializeField] private Text objectName;
-    [SerializeField] private Button getBtn;
+    [SerializeField] private GameObject acceptChoiceButton;
+    [SerializeField] private GameObject objectLeftButton;
+    [SerializeField] private GameObject objectRightButton;
 
     static Story story;
     
@@ -38,8 +44,8 @@ public class StoryManager : MonoBehaviour
 
     [Header("Dress Choices")]
     [SerializeField] private GameObject dressChoices;
-    [SerializeField] private Button leftBtn;
-    [SerializeField] private Button rightBtn;
+    [SerializeField] private Button dressLeftBtn;
+    [SerializeField] private Button dressRightBtn;
     public GameObject dressBaseChoiceButton;
     public GameObject dressDiamondsChoiceButton;
     public GameObject dressOptionPanel;
@@ -53,6 +59,10 @@ public class StoryManager : MonoBehaviour
     void Start()
     {
         nextBtn.onClick.AddListener(delegate { NextNode(); });
+
+        dressBtn.onClick.RemoveAllListeners();
+        dressBtn.onClick.AddListener(delegate { OpenDress(); });
+
         story = new Story(inkFile.text);
 
         story.ObserveVariable("professionalism", (string varName, object newValue) => {
@@ -71,6 +81,12 @@ public class StoryManager : MonoBehaviour
         if (!PlayerPrefs.HasKey("Diamonds"))
             PlayerPrefs.SetInt("Diamonds", 0);
 
+        if (!PlayerPrefs.HasKey("Professionalism"))
+            PlayerPrefs.SetInt("Professionalism", 0);
+
+        if (!PlayerPrefs.HasKey("Scandal"))
+            PlayerPrefs.SetInt("Scandal", 0);
+
         tags = new List<string>();
         choiceSelected = null;
 
@@ -80,16 +96,24 @@ public class StoryManager : MonoBehaviour
     private void SetProfessionalism(int newValue)
     {
         Animator anim = infoProfessionalism.GetComponent<Animator>();
-        infoProfessionalism.GetComponentInChildren<UnityEngine.UI.Text>().text = "+" + newValue.ToString() + " Профессионализм";
+        infoProfessionalism.GetComponentInChildren<UnityEngine.UI.Text>().text = "+1" + " Профессионализм";
+
+        PlayerPrefs.SetInt("Professionalism", newValue);
 
         anim.SetTrigger("show");
+
+        NextNode();
     }
     private void SetScandal(int newValue)
     {
         Animator anim = infoScandal.GetComponent<Animator>();
-        infoScandal.GetComponentInChildren<UnityEngine.UI.Text>().text = "+" + newValue.ToString() + " Скандал";
+        infoScandal.GetComponentInChildren<UnityEngine.UI.Text>().text = "+1" + " Скандал";
+
+        PlayerPrefs.SetInt("Scandal", newValue);
 
         anim.SetTrigger("show");
+
+        NextNode();
     }
 
     public void NextNode()
@@ -125,7 +149,7 @@ public class StoryManager : MonoBehaviour
     // Finished the Story (Dialogue)
     private void FinishDialogue()
     {
-        Debug.Log("End of Dialogue!");
+        
     }
 
     // Advance through the story 
@@ -152,6 +176,11 @@ public class StoryManager : MonoBehaviour
             }
         }
 
+        if (currentSentence.Contains("(имя гг)"))
+        {
+            currentSentence = currentSentence.Replace("(имя гг)", PlayerPrefs.GetString("PlayerName").ToString());
+        }
+
         Match dressMatch = Regex.Match(currentSentence, dressPattern);
         Match objectsMatch = Regex.Match(currentSentence, objectPattern);
 
@@ -169,6 +198,8 @@ public class StoryManager : MonoBehaviour
         }
         if (objectsMatch.Success)
         {
+            currentSentence = currentSentence.Replace("\n", "");
+            acceptChoiceButton.GetComponentInChildren<Text>().text = currentSentence;
             return 3;
         }
         else
@@ -245,6 +276,10 @@ public class StoryManager : MonoBehaviour
         dialogueManager.SetDialogueActive(true);
         dressChoices.SetActive(false);
         optionPanel.SetActive(false);
+
+        objectLeftButton.SetActive(false);
+        objectRightButton.SetActive(false);
+
         objectPanel.SetActive(false);
 
         dialogueManager.SetDiamonds(false);
@@ -273,6 +308,9 @@ public class StoryManager : MonoBehaviour
                     break;
                 case "info":
                     SetInfo(param);
+                    break;
+                case "dress":
+                    SetDress(int.Parse(param));
                     break;
             }
         }
@@ -304,6 +342,10 @@ public class StoryManager : MonoBehaviour
         anim.SetTrigger("show");
     }
 
+    void SetDress(int id)
+    {
+        PlayerPrefs.SetInt("Dress", id);
+    }
 
     private int currentDress = 0;
     private List<Choice> dressChoicesList = null;
@@ -315,8 +357,8 @@ public class StoryManager : MonoBehaviour
         dressChoicesList = story.currentChoices;
         currentDress = 0;
 
-        leftBtn.onClick.AddListener(PreviousDress);
-        rightBtn.onClick.AddListener(NextDress);
+        dressLeftBtn.onClick.AddListener(PreviousDress);
+        dressRightBtn.onClick.AddListener(NextDress);
 
         SetChoice(dressChoicesList, currentDress);
 
@@ -417,6 +459,9 @@ public class StoryManager : MonoBehaviour
         temp.GetComponent<Button>().onClick.AddListener(() => { selectable.Decide(); });
     }
 
+
+    private int currentObject = 0;
+    private List<Choice> objectChoicesList = null;
     IEnumerator ShowObjectsChoices()
     {
         SetName("..");
@@ -425,18 +470,71 @@ public class StoryManager : MonoBehaviour
         objectPanel.SetActive(true);
         dialogueManager.SetDialogueActive(false);
 
-        List<Choice> _choices = story.currentChoices;
-        string choiceText = _choices[0].text;
+        objectChoicesList = story.currentChoices;
+        currentObject = 0;
 
-        objectPanel.GetComponent<Image>().sprite = Resources.Load<Sprite>("Object/" + choiceText);
+        if (objectChoicesList.Count > 1)
+        {
+            objectLeftButton.SetActive(true);
+            objectRightButton.SetActive(true);
 
-        Selectable selectable = getBtn.GetComponent<Selectable>();
-        selectable.SetParameters(choiceText, 0);
-        selectable.element = _choices[0];
-        getBtn.GetComponent<Button>().onClick.AddListener(() => { selectable.Decide(); });
+            objectLeftButton.GetComponent<Button>().onClick.AddListener(PreviousObject);
+            objectRightButton.GetComponent<Button>().onClick.AddListener(NextObject);
+        }
+        
+        SetObjectChoice(objectChoicesList, currentObject);
 
         yield return new WaitUntil(() => { return choiceSelected != null; });
 
         AdvanceFromDecision();
+    }
+
+    void PreviousObject()
+    {
+        if (currentObject == 0)
+        {
+            currentObject = objectChoicesList.Count - 1;
+        }
+        else
+        {
+            currentObject -= 1;
+        }
+        SetObjectChoice(objectChoicesList, currentObject);
+    }
+
+    void NextObject()
+    {
+        if (currentObject == objectChoicesList.Count - 1)
+        {
+            currentObject = 0;
+        }
+        else
+        {
+            currentObject += 1;
+        }
+        SetObjectChoice(objectChoicesList, currentObject);
+    }
+
+    void SetObjectChoice(List<Choice> choices, int i)
+    {
+        objectPanel.GetComponent<Image>().sprite = Resources.Load<Sprite>("Object/" + choices[i].text);
+
+        Selectable selectable = acceptChoiceButton.GetComponent<Selectable>();
+        selectable.SetParameters(choices[i].text, 0);
+        selectable.element = choices[i];
+        acceptChoiceButton.GetComponent<Button>().onClick.AddListener(() => { selectable.Decide(); });
+    }
+
+    public void OpenDress()
+    {
+        UI.SetActive(false);
+    }
+
+    public void CloseDress()
+    {
+        UI.SetActive(true);
+
+        if (characterManager.CurrentName == "ГГ")
+            characterManager.UpdateCharacterApperance(characterManager.CurrentEmotion);
     }
 }
