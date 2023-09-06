@@ -35,7 +35,6 @@ namespace VNCreator
                 musicActiveToggle.onValueChanged.AddListener(GameOptions.SetMusicActiveVolume);
             }
 
-
             if (musicVolumeSlider != null)
             {
                 musicVolumeSlider.value = GameOptions.musicVolume;
