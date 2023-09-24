@@ -6,6 +6,8 @@ namespace VNCreator
 {
     public class MainMenu : MonoBehaviour
     {
+        [SerializeField] private Text diamonds;
+
         [Header("Buttons")]
         public Button newGameBtn;
         public Button continueBtn;
@@ -23,9 +25,16 @@ namespace VNCreator
         public GameObject mainMenu;
         public GameObject sceneLoader;
 
+        private void Awake()
+        {
+            diamonds.text = PlayerPrefs.GetInt("Diamonds").ToString();
+        }
+
         void Start()
         {
-            if(newGameBtn != null)
+            PlayerPrefs.SetInt("Diamonds", 100);
+
+            if (newGameBtn != null)
                 newGameBtn.onClick.AddListener(NewGame);
             if(optionsMenuBtn != null)
                 optionsMenuBtn.onClick.AddListener(DisplayOptionsMenu);

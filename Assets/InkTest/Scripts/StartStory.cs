@@ -34,7 +34,6 @@ public class StartStory : MonoBehaviour
     {
         PlayerPrefs.SetInt("Professionalism", 0);
         PlayerPrefs.SetInt("Scandal", 0);
-        PlayerPrefs.SetInt("Diamonds", 100);
 
         if (!PlayerPrefs.HasKey(ItemsDatabase.Category.Appearance.ToString()))
             PlayerPrefs.SetInt(ItemsDatabase.Category.Appearance.ToString(), 0);
