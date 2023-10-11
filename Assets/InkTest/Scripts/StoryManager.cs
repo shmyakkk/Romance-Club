@@ -129,38 +129,27 @@ public class StoryManager : MonoBehaviour
         //Is there more to the story?
         if (story.canContinue)
         {
-            if (dialogueManager.IsPrinting)
-            {
-                dialogueManager.StopTyping();
-            }
-            else
-            {
-                int choiceOption = AdvanceDialogue();
+            int choiceOption = AdvanceDialogue();
 
-                //Are there any choices?
-                if (story.currentChoices.Count != 0)
+            //Are there any choices?
+            if (story.currentChoices.Count != 0)
+            {
+                switch (choiceOption)
                 {
-                    switch (choiceOption)
-                    {
-                        case 1:
-                            StartCoroutine(ShowChoices());
-                            break;
-                        case 2:
-                            StartCoroutine(ShowDressChoices());
-                            break;
-                        case 3:
-                            StartCoroutine(ShowObjectsChoices());
-                            break;
-                    }
+                    case 1:
+                        StartCoroutine(ShowChoices());
+                        break;
+                    case 2:
+                        StartCoroutine(ShowDressChoices());
+                        break;
+                    case 3:
+                        StartCoroutine(ShowObjectsChoices());
+                        break;
                 }
             }
         }
         else
         {
-            if (dialogueManager.IsPrinting)
-            {
-                dialogueManager.StopTyping();
-            }
             FinishDialogue();
         }
     }
@@ -176,7 +165,7 @@ public class StoryManager : MonoBehaviour
     {
         string currentSentence = story.Continue();
 
-        string namePattern = @"^(.*?)(\s\(([^)]+)\))?:\s";
+        string namePattern = @"^(.*?)(\s\([^\)]+\))?:\s";
         string emotionPattern = @"\(([^)]+)\)";
         string dressPattern = @"dress";
         string objectPattern = @"object";
@@ -187,9 +176,10 @@ public class StoryManager : MonoBehaviour
             string name = nameMatch.Groups[1].Value.Trim();
             SetName(name);
 
-            string emotion = nameMatch.Groups[3].Value.Trim();
-            if (!string.IsNullOrEmpty(emotion))
+            Match emotionMatch = Regex.Match(nameMatch.Groups[2].Value, emotionPattern);
+            if (emotionMatch.Success)
             {
+                string emotion = emotionMatch.Groups[1].Value.Trim();
                 SetAnimation(emotion);
             }
         }
@@ -232,6 +222,7 @@ public class StoryManager : MonoBehaviour
     // Create then show the choices on the screen until one got selected
     IEnumerator ShowChoices()
     {
+        Debug.Log("There are choices need to be made here!");
         List<Choice> _choices = story.currentChoices;
 
         for (int i = 0; i < _choices.Count; i++)
