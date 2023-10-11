@@ -137,8 +137,6 @@ PlayerSettings:
   preloadedAssets:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 8013480682184649867, guid: f65430a57bc320e43ab747311f6de296, type: 2}
-  - {fileID: 11400000, guid: 9d730e8e4bb6e7c419008a2a4a847f98, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -237,10 +235,10 @@ PlayerSettings:
   iOSRenderExtraFrameOnPause: 0
   iosCopyPluginsCodeInsteadOfSymlink: 0
   appleDeveloperTeamID: 
-  iOSManualSigningProvisioningProfileID: 2bd9c314-e71c-4fcb-bcd7-c9cdeddde8d5
+  iOSManualSigningProvisioningProfileID: 63FXQWGKM3.com.razrabstory.story-test
   tvOSManualSigningProvisioningProfileID: 
   bratwurstManualSigningProvisioningProfileID: 
-  iOSManualSigningProvisioningProfileType: 2
+  iOSManualSigningProvisioningProfileType: 1
   tvOSManualSigningProvisioningProfileType: 0
   bratwurstManualSigningProvisioningProfileType: 0
   appleEnableAutomaticSigning: 2
