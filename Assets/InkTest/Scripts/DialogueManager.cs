@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using VNCreator;
 
 public class DialogueManager : MonoBehaviour
@@ -13,14 +14,21 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject currentDiamondsPanel;
     [SerializeField] private CharacterManager characterManager;
 
+    private Coroutine printingCoroutine;
+    private bool isPrinting = false;
+    private string currentText;
+
+    public bool IsPrinting { get => isPrinting; private set => isPrinting = value; }
+
     public void SetText(string currentSentence)
     {
         StopAllCoroutines();
-        StartCoroutine(TypeSentence(currentSentence));
+        printingCoroutine = StartCoroutine(TypeSentence(currentSentence));
     }
 
     public void SetName(string _name)
     {
+        nameTag.fontSize = 40;
         Animator dialogueAnim = gameObject.GetComponent<Animator>();
 
         switch (_name)
@@ -40,6 +48,7 @@ public class DialogueManager : MonoBehaviour
                 dialogueAnim.Play("right");
                 break;
         }
+        AutoScaleText.FitTextInContainer(nameTag, nameTag.GetComponent<RectTransform>());
     }
     
     public void SetDiamonds(bool isActive)
@@ -54,21 +63,37 @@ public class DialogueManager : MonoBehaviour
     private IEnumerator TypeSentence(string sentence)
     {
         message.text = string.Empty;
+        currentText = sentence;
+
         if (GameOptions.isInstantText)
         {
             message.text = sentence;
         }
         else
         {
+            IsPrinting = true;
+
             char[] _chars = sentence.ToCharArray();
             string fullString = string.Empty;
             for (int i = 0; i < _chars.Length; i++)
             {
                 fullString += _chars[i];
                 message.text = fullString;
-                yield return new WaitForSeconds(0.0001f);
+                yield return new WaitForFixedUpdate();
             }
         }
+
+        IsPrinting = false;
+    }
+
+    public void StopTyping()
+    {
+        if (printingCoroutine != null)
+        {
+            StopCoroutine(printingCoroutine);
+        }
+        message.text = currentText;
+        isPrinting = false;
     }
 
     public void SetDialogueActive(bool isActive) => gameObject.SetActive(isActive);
