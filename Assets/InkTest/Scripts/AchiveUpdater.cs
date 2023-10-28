@@ -12,6 +12,11 @@ public class AchiveUpdater : MonoBehaviour
     [SerializeField] private Text achive2;
     [SerializeField] private Text achive3;
 
+    private void Awake()
+    {
+        SetParameters();
+    }
+
     public void SetParameters()
     {
         if (!PlayerPrefs.HasKey("Diamonds"))

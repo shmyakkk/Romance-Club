@@ -24,6 +24,8 @@ public class StoryManager : MonoBehaviour
     public Button dressBtn;
     public Button menuBtn;
     public GameObject UI;
+    public GameObject finishScreen;
+    public Button finishBtn;
 
 
     [Header("Info")]
@@ -60,6 +62,7 @@ public class StoryManager : MonoBehaviour
     void Start()
     {
         nextBtn.onClick.AddListener(delegate { NextNode(); });
+        finishBtn.onClick.AddListener(GoToMenu);
 
         dressBtn.onClick.RemoveAllListeners();
         dressBtn.onClick.AddListener(delegate { OpenDress(); });
@@ -161,14 +164,13 @@ public class StoryManager : MonoBehaviour
             {
                 dialogueManager.StopTyping();
             }
-            FinishDialogue();
         }
     }
 
     // Finished the Story (Dialogue)
     private void FinishDialogue()
     {
-        
+        finishScreen.SetActive(true);
     }
 
     // Advance through the story 
@@ -328,6 +330,9 @@ public class StoryManager : MonoBehaviour
                     break;
                 case "dress":
                     SetDress(int.Parse(param));
+                    break;
+                case "end":
+                    FinishDialogue();
                     break;
             }
         }
