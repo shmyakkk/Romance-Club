@@ -9,18 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae6c8a57a5768874eae4909ed4be6309, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b88a7765caed6444a183a760db3cc8d, type: 3}
   m_Name: "\u0413\u043E\u0441\u0442\u044C\u044F"
   m_EditorClassIdentifier: 
   category: 
   Id: 0
-  isEnabled: 0
-  sprite: {fileID: 0}
-  a_base: {fileID: 0}
+  isEnabled: 1
+  sprite: {fileID: 21300000, guid: 0d19c245a4048b54397f365b9296e87f, type: 3}
+  a_base: {fileID: 21300000, guid: 0d19c245a4048b54397f365b9296e87f, type: 3}
   a_dream: {fileID: 0}
-  a_evil: {fileID: 0}
+  a_evil: {fileID: 21300000, guid: c0ade119ea9f764499fe8ae989a02e2e, type: 3}
   a_flirt: {fileID: 0}
-  a_sad: {fileID: 0}
-  a_smile: {fileID: 0}
-  a_surprise: {fileID: 0}
+  a_sad: {fileID: 21300000, guid: 7d6c372a4d78c1141bd35a36905239ea, type: 3}
+  a_smile: {fileID: 21300000, guid: 70affc5fc91b76041a36fe1828a2f6df, type: 3}
+  a_surprise: {fileID: 21300000, guid: 7ce29570c2be5694785a81aa5659b98a, type: 3}
   a_shadow: {fileID: 0}
