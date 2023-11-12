@@ -4,11 +4,13 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+    public TextAsset inkFile;
+
     [SerializeField] private Text diamonds;
 
     [Header("Buttons")]
-    public Button newGameBtn;
-    public Button continueBtn;
+    public Button playBtn;
+    public Button startNewGameBtn;
     public Button optionsMenuBtn;
     public Button storeMenuBtn;
     public Button quitBtn;
@@ -31,27 +33,29 @@ public class MainMenu : MonoBehaviour
     {
         PlayerPrefs.SetInt("Diamonds", 100);
 
-        if (newGameBtn != null)
-            newGameBtn.onClick.AddListener(NewGame);
+        if (playBtn != null)
+        {
+            if (PlayerPrefs.HasKey("Story_1"))
+                playBtn.onClick.AddListener(LoadGame);
+            else
+                playBtn.onClick.AddListener(NewGame);
+        }
+        if (startNewGameBtn != null)
+        {
+            startNewGameBtn.onClick.AddListener(NewGame);
+        }
         if (optionsMenuBtn != null)
             optionsMenuBtn.onClick.AddListener(DisplayOptionsMenu);
         if (storeMenuBtn != null)
             storeMenuBtn.onClick.AddListener(DisplayStoreMenu);
         if (quitBtn != null)
             quitBtn.onClick.AddListener(Quit);
-        if (continueBtn != null)
-        {
-            if (PlayerPrefs.HasKey("MainGame"))
-                continueBtn.onClick.AddListener(LoadGame);
-            else
-                continueBtn.interactable = false;
-        }
     }
 
     void NewGame()
     {
-        GameSaveManager.NewLoad("MainGame");
-        //SceneManager.LoadScene(playScene, LoadSceneMode.Single);
+        GameSaveManager.currentStory = inkFile.text;
+
         sceneLoader.SetActive(true);
         mainMenu.SetActive(false);
 
@@ -60,8 +64,12 @@ public class MainMenu : MonoBehaviour
 
     void LoadGame()
     {
-        GameSaveManager.currentLoadName = "MainGame";
-        SceneManager.LoadScene(playScene, LoadSceneMode.Single);
+        GameSaveManager.Load();
+
+        sceneLoader.SetActive(true);
+        mainMenu.SetActive(false);
+
+        sceneLoader.GetComponent<SceneLoading>().LoadScene(playScene);
     }
 
     void DisplayOptionsMenu()
