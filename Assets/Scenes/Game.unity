@@ -1119,7 +1119,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7ab2b698ec6852149a843b42632ce5dd, type: 3}
+  m_Sprite: {fileID: -3343141016008520045, guid: 4ea5c501fea8bee4b93b46f79324d5b2, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1303,8 +1303,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb4e59514e90489d985e9a17c838085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Horizontal: 0
-  m_Veritical: 0
 --- !u!1 &171387665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1799,8 +1797,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb4e59514e90489d985e9a17c838085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Horizontal: 0
-  m_Veritical: 0
 --- !u!1 &355159542
 GameObject:
   m_ObjectHideFlags: 0
@@ -3033,7 +3029,6 @@ GameObject:
   - component: {fileID: 691244831}
   - component: {fileID: 691244830}
   - component: {fileID: 691244829}
-  - component: {fileID: 691244828}
   - component: {fileID: 691244832}
   m_Layer: 5
   m_Name: Dialogue
@@ -3065,20 +3060,6 @@ RectTransform:
   m_AnchoredPosition: {x: -30, y: 636}
   m_SizeDelta: {x: 680, y: 300}
   m_Pivot: {x: 0.5, y: 0}
---- !u!114 &691244828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 691244826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bb4e59514e90489d985e9a17c838085, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Horizontal: 0
-  m_Veritical: 0
 --- !u!95 &691244829
 Animator:
   serializedVersion: 7
@@ -3153,7 +3134,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameTag: {fileID: 2055535006}
   message: {fileID: 1324040905}
-  dialoguePanel: {fileID: 691244826}
   currentDiamondsPanel: {fileID: 1118086011}
   characterManager: {fileID: 861407874}
 --- !u!1 &694048967
@@ -8620,7 +8600,7 @@ MonoBehaviour:
   nextBtn: {fileID: 1051007572}
   baseChoiceButton: {fileID: 5228626291237060138, guid: c7cfe13970c162e4bb7f12d28a9d458a, type: 3}
   diamondsChoiceButton: {fileID: 5228626291237060138, guid: 6b2a9cc0f8a38904ea838ce8c59df9ae, type: 3}
-  optionPanel: {fileID: 1091147394}
+  optionPanel: {fileID: 1030936715}
   dressBtn: {fileID: 1010694366}
   menuBtn: {fileID: 1653555386}
   UI: {fileID: 36222588}
@@ -8639,7 +8619,7 @@ MonoBehaviour:
   dressRightBtn: {fileID: 2135988890}
   dressBaseChoiceButton: {fileID: 1873388052160652964, guid: fc535cb90ec3a2846ba4b1d720ce1727, type: 3}
   dressDiamondsChoiceButton: {fileID: 4701814951538746338, guid: 6c21896f6f824a44f9cf88747fd37fdf, type: 3}
-  dressOptionPanel: {fileID: 926250833}
+  dressOptionPanel: {fileID: 0}
   characterManager: {fileID: 861407874}
   dialogueManager: {fileID: 691244832}
 --- !u!114 &2003884074
@@ -9113,8 +9093,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb4e59514e90489d985e9a17c838085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Horizontal: 0
-  m_Veritical: 0
 --- !u!222 &2071184581
 CanvasRenderer:
   m_ObjectHideFlags: 0
