@@ -6551,8 +6551,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diamonds: {fileID: 100206112}
-  newGameBtn: {fileID: 701939205}
-  continueBtn: {fileID: 0}
+  playBtn: {fileID: 701939205}
+  restartBtn: {fileID: 351179307}
   optionsMenuBtn: {fileID: 650145815}
   storeMenuBtn: {fileID: 113070404}
   quitBtn: {fileID: 220043226}

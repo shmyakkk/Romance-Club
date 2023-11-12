@@ -8600,7 +8600,7 @@ MonoBehaviour:
   nextBtn: {fileID: 1051007572}
   baseChoiceButton: {fileID: 5228626291237060138, guid: c7cfe13970c162e4bb7f12d28a9d458a, type: 3}
   diamondsChoiceButton: {fileID: 5228626291237060138, guid: 6b2a9cc0f8a38904ea838ce8c59df9ae, type: 3}
-  optionPanel: {fileID: 1030936715}
+  optionPanel: {fileID: 1091147394}
   dressBtn: {fileID: 1010694366}
   menuBtn: {fileID: 1653555386}
   UI: {fileID: 36222588}

@@ -69,6 +69,16 @@ public class StoryManager : MonoBehaviour
 
         story = new Story(inkFile.text);
 
+        if (PlayerPrefs.GetString("Story") == "")
+        {
+            story.ResetState();
+        }
+        else
+        {
+            string savedState = PlayerPrefs.GetString("Story");
+            story.state.LoadJson(savedState);
+        }
+
         story.ObserveVariable("professionalism", (string varName, object newValue) => {
         SetProfessionalism((int)newValue);
         });
@@ -163,6 +173,8 @@ public class StoryManager : MonoBehaviour
                 dialogueManager.StopTyping();
             }
         }
+
+        PlayerPrefs.SetString("Story", story.state.ToJson());
     }
 
     // Finished the Story (Dialogue)

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -7,8 +7,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Text diamonds;
 
     [Header("Buttons")]
-    public Button newGameBtn;
-    public Button continueBtn;
+    public Button playBtn;
+    public Button restartBtn;
     public Button optionsMenuBtn;
     public Button storeMenuBtn;
     public Button quitBtn;
@@ -31,37 +31,39 @@ public class MainMenu : MonoBehaviour
     {
         PlayerPrefs.SetInt("Diamonds", 100);
 
-        if (newGameBtn != null)
-            newGameBtn.onClick.AddListener(NewGame);
+        if (!PlayerPrefs.HasKey("Story"))
+            PlayerPrefs.SetString("Story", "");
+
+        if (playBtn != null)
+            playBtn.onClick.AddListener(Play);
+
         if (optionsMenuBtn != null)
             optionsMenuBtn.onClick.AddListener(DisplayOptionsMenu);
+
         if (storeMenuBtn != null)
             storeMenuBtn.onClick.AddListener(DisplayStoreMenu);
+
         if (quitBtn != null)
             quitBtn.onClick.AddListener(Quit);
-        if (continueBtn != null)
-        {
-            if (PlayerPrefs.HasKey("MainGame"))
-                continueBtn.onClick.AddListener(LoadGame);
-            else
-                continueBtn.interactable = false;
-        }
+
+        if (restartBtn != null)
+            restartBtn.onClick.AddListener(Restart);
     }
 
-    void NewGame()
+    void Play()
     {
-        GameSaveManager.NewLoad("MainGame");
-        //SceneManager.LoadScene(playScene, LoadSceneMode.Single);
         sceneLoader.SetActive(true);
         mainMenu.SetActive(false);
 
         sceneLoader.GetComponent<SceneLoading>().LoadScene(playScene);
     }
 
-    void LoadGame()
+    void Restart()
     {
-        GameSaveManager.currentLoadName = "MainGame";
-        SceneManager.LoadScene(playScene, LoadSceneMode.Single);
+        PlayerPrefs.SetString("Story", "");
+        PlayerPrefs.SetInt("Professionalism", 0);
+        PlayerPrefs.SetInt("Scandal", 0);
+        //сброс текста и ачивок
     }
 
     void DisplayOptionsMenu()

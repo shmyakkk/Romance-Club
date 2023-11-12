@@ -30,33 +30,50 @@ public class StartStory : MonoBehaviour
 
     private void Start()
     {
-        PlayerPrefs.SetInt("Professionalism", 0);
-        PlayerPrefs.SetInt("Scandal", 0);
+        if (PlayerPrefs.GetString("Story") == "")
+        {
+            PlayerPrefs.SetInt("Professionalism", 0);
+            PlayerPrefs.SetInt("Scandal", 0);
 
-        if (!PlayerPrefs.HasKey(ItemsDatabase.Category.Appearance.ToString()))
-            PlayerPrefs.SetInt(ItemsDatabase.Category.Appearance.ToString(), 0);
+            if (!PlayerPrefs.HasKey(ItemsDatabase.Category.Appearance.ToString()))
+                PlayerPrefs.SetInt(ItemsDatabase.Category.Appearance.ToString(), 0);
 
-        if (!PlayerPrefs.HasKey(ItemsDatabase.Category.Dress.ToString()))
-            PlayerPrefs.SetInt(ItemsDatabase.Category.Dress.ToString(), 0);
+            if (!PlayerPrefs.HasKey(ItemsDatabase.Category.Dress.ToString()))
+                PlayerPrefs.SetInt(ItemsDatabase.Category.Dress.ToString(), 0);
 
-        if (!PlayerPrefs.HasKey(ItemsDatabase.Category.Hair.ToString()))
-            PlayerPrefs.SetInt(ItemsDatabase.Category.Hair.ToString(), 0);
+            if (!PlayerPrefs.HasKey(ItemsDatabase.Category.Hair.ToString()))
+                PlayerPrefs.SetInt(ItemsDatabase.Category.Hair.ToString(), 0);
 
-        if (!PlayerPrefs.HasKey(ItemsDatabase.Category.Accessories.ToString()))
-            PlayerPrefs.SetInt(ItemsDatabase.Category.Accessories.ToString(), 0);
+            if (!PlayerPrefs.HasKey(ItemsDatabase.Category.Accessories.ToString()))
+                PlayerPrefs.SetInt(ItemsDatabase.Category.Accessories.ToString(), 0);
 
-        nameSubmitBtn.onClick.AddListener(SubmitName);
-        dressBtn.onClick.AddListener(OpenDress);
-        continueBtn.onClick.AddListener(Continue);
-        startStoryBtn.onClick.AddListener(Fade);
+            nameSubmitBtn.onClick.AddListener(SubmitName);
+            dressBtn.onClick.AddListener(OpenDress);
+            continueBtn.onClick.AddListener(Continue);
+            startStoryBtn.onClick.AddListener(Fade);
 
-        dressScreen.SetActive(false);
-        bgScreen.SetActive(true);
-        startedScreen.SetActive(true);
-        dressBtn.gameObject.SetActive(false);
-        dressBG.SetActive(false);
+            dressScreen.SetActive(false);
+            bgScreen.SetActive(true);
+            startedScreen.SetActive(true);
+            dressBtn.gameObject.SetActive(false);
+            dressBG.SetActive(false);
 
-        dialogueManager.SetDialogueActive(false);
+            dialogueManager.SetDialogueActive(false);
+        }
+        else
+        {
+            dressScreen.SetActive(false);
+            bgScreen.SetActive(false);
+            dressBtn.gameObject.SetActive(false);
+            dressBG.SetActive(false);
+
+            dialogueManager.SetDialogueActive(true);
+
+            characterManager.CurrentName = "..";
+            characterManager.SetCharacter("base");
+
+            StartPlot();
+        }
     }
 
     private void SubmitName()
@@ -89,7 +106,7 @@ public class StartStory : MonoBehaviour
         dressScreen.SetActive(false);
         dialogueManager.Show("ГГ", "Выгляжу отлично. Пора начинать!");
         characterManager.CurrentName = "ГГ";
-        characterManager.SetCharacter("спокойствие");
+        characterManager.SetCharacter("base");
         bgScreen.SetActive(false);
         startStoryBtn.gameObject.SetActive(true);
 
