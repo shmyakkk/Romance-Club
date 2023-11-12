@@ -9,6 +9,8 @@ using UnityEngine.SceneManagement;
 
 public class StoryManager : MonoBehaviour
 {
+    public TextAsset inkFile;
+
     [Header("Visuals")]
     [SerializeField] private Image backgroungImg;
 
@@ -54,14 +56,9 @@ public class StoryManager : MonoBehaviour
     [SerializeField] private DialogueManager dialogueManager;
 
 
-    private static string currentPart;
-
-
     // Start is called before the first frame update
     void Start()
     {
-        story = new Story(GameSaveManager.currentStory);
-
         nextBtn.onClick.AddListener(delegate { NextNode(); });
         finishBtn.onClick.AddListener(GoToMenu);
 
@@ -69,6 +66,8 @@ public class StoryManager : MonoBehaviour
         dressBtn.onClick.AddListener(delegate { OpenDress(); });
 
         menuBtn.onClick.AddListener(GoToMenu);
+
+        story = new Story(inkFile.text);
 
         story.ObserveVariable("professionalism", (string varName, object newValue) => {
         SetProfessionalism((int)newValue);
@@ -164,13 +163,6 @@ public class StoryManager : MonoBehaviour
                 dialogueManager.StopTyping();
             }
         }
-
-        GameSaveManager.Save(story.state.ToJson());
-    }
-
-    public void SetPart(string part)
-    {
-        story.ChoosePathString(part);
     }
 
     // Finished the Story (Dialogue)
@@ -490,7 +482,6 @@ public class StoryManager : MonoBehaviour
 
     private int currentObject = 0;
     private List<Choice> objectChoicesList = null;
-
     IEnumerator ShowObjectsChoices()
     {
         SetName("..");

@@ -6550,10 +6550,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 722985dd1b42a494781b1b7f4ee347a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inkFile: {fileID: 4900000, guid: 0149cd9dc2b4bfa4da785ef87922c503, type: 3}
   diamonds: {fileID: 100206112}
-  playBtn: {fileID: 701939205}
-  startNewGameBtn: {fileID: 351179307}
+  newGameBtn: {fileID: 701939205}
+  continueBtn: {fileID: 0}
   optionsMenuBtn: {fileID: 650145815}
   storeMenuBtn: {fileID: 113070404}
   quitBtn: {fileID: 220043226}
