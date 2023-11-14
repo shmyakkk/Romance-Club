@@ -10,15 +10,36 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Text message;
     [SerializeField] private GameObject currentDiamondsPanel;
     [SerializeField] private CharacterManager characterManager;
+    [SerializeField] private GameObject dialogueBG;
 
     private Coroutine printingCoroutine;
     private bool isPrinting = false;
     private string currentText;
 
+    private int maxSimbol = 92;
+
+    private float startedY = 0;
+    private float startedHeight = 300;
+
     public bool IsPrinting { get => isPrinting; private set => isPrinting = value; }
 
     public void SetText(string currentSentence)
     {
+        Vector2 currentPos = dialogueBG.GetComponent<RectTransform>().localPosition;
+        Vector2 currentSize = dialogueBG.GetComponent<RectTransform>().sizeDelta;
+
+        dialogueBG.GetComponent<RectTransform>().localPosition = new Vector2(currentPos.x, startedY);
+        dialogueBG.GetComponent<RectTransform>().sizeDelta = new Vector2(currentSize.x, startedHeight);
+
+        currentPos = dialogueBG.GetComponent<RectTransform>().localPosition;
+        currentSize = dialogueBG.GetComponent<RectTransform>().sizeDelta;
+
+        if (currentSentence.Length > maxSimbol)
+        {
+            dialogueBG.GetComponent<RectTransform>().localPosition = new Vector2(currentPos.x, currentPos.y - 50);
+            dialogueBG.GetComponent<RectTransform>().sizeDelta = new Vector2(currentSize.x, currentSize.y + 50);
+        }
+
         StopAllCoroutines();
         printingCoroutine = StartCoroutine(TypeSentence(currentSentence));
     }

@@ -38,7 +38,7 @@ public class StoryManager : MonoBehaviour
     [SerializeField] private GameObject objectLeftButton;
     [SerializeField] private GameObject objectRightButton;
 
-    static Story story;
+    public static Story story;
     
     List<string> tags;
     static Choice choiceSelected;
@@ -183,6 +183,11 @@ public class StoryManager : MonoBehaviour
                 dialogueManager.StopTyping();
             }
         }
+    }
+
+    public void SetPartNumber(string part)
+    {
+        story.ChoosePathString(part);
     }
 
     // Finished the Story (Dialogue)
@@ -387,16 +392,29 @@ public class StoryManager : MonoBehaviour
 
     void SetBG(string _bg)
     {
-        fader.FadeIn(() =>
+        if (_bg == "blink")
         {
-            backgroungImg.sprite = Resources.Load<Sprite>("BG/" + _bg);
-            PlayerPrefs.SetString("BG", _bg);
+            fader.Blink(() =>
+            {
+                dialogueManager.SetDialogueActive(true);
+                NextNode();
 
-            dialogueManager.SetDialogueActive(true);
-            NextNode();
+                nextBtn.enabled = true;
+            });
+        }
+        else
+        {
+            fader.FadeIn(() =>
+            {
+                backgroungImg.sprite = Resources.Load<Sprite>("BG/" + _bg);
+                PlayerPrefs.SetString("BG", _bg);
 
-            nextBtn.enabled = true;
-        });
+                dialogueManager.SetDialogueActive(true);
+                NextNode();
+
+                nextBtn.enabled = true;
+            });
+        }
     }
 
     void SetInfo(string _text)
@@ -601,12 +619,5 @@ public class StoryManager : MonoBehaviour
 
         if (characterManager.CurrentName == "ГГ")
             characterManager.UpdateCharacterApperance(characterManager.CurrentEmotion);
-    }
-
-    IEnumerator WaitTimeForAction(float time, Action action)
-    {
-        yield return new WaitForSeconds(time);
-
-        action.Invoke();
     }
 }

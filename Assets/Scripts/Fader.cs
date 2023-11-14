@@ -11,6 +11,8 @@ public class Fader : MonoBehaviour
     private const string FADE_IN = "Fade_In";
     private const string FADE_OUT = "Fade_Out";
 
+    private const string BLINK = "Blink";
+
     public void FadeIn(Action onAnimationEnd)
     {
         onAnimationEndCallback = onAnimationEnd;
@@ -31,5 +33,14 @@ public class Fader : MonoBehaviour
         yield return new WaitForSeconds(animationLength);
 
         onAnimationEndCallback?.Invoke();
+    }
+
+    public void Blink(Action onAnimationEnd)
+    {
+        onAnimationEndCallback = onAnimationEnd;
+
+        faderAnimator.Play(BLINK, 0, 0f);
+
+        StartCoroutine(WaitForAnimationEnd(BLINK));
     }
 }
