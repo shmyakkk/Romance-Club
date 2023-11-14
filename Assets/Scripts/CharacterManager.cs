@@ -103,10 +103,7 @@ public class CharacterManager : MonoBehaviour
         float animationLength = anim.GetCurrentAnimatorStateInfo(0).length;
         yield return new WaitForSeconds(animationLength);
 
-        if (onAnimationEndCallback != null)
-        {
-            onAnimationEndCallback.Invoke();
-        }
+        onAnimationEndCallback?.Invoke();
     }
 
     private void SetPlayerAppearance(string a)

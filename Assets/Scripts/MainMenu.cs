@@ -22,17 +22,15 @@ public class MainMenu : MonoBehaviour
     public GameObject mainMenu;
     public GameObject sceneLoader;
 
-    private void Awake()
-    {
-        diamonds.text = PlayerPrefs.GetInt("Diamonds").ToString();
-    }
+    [Header("Scripts")]
+    public AchiveUpdater achiveUpdater;
 
     void Start()
-    {
-        PlayerPrefs.SetInt("Diamonds", 100);
-
+    { 
         if (!PlayerPrefs.HasKey("Story"))
+        {
             PlayerPrefs.SetString("Story", "");
+        }
 
         if (playBtn != null)
             playBtn.onClick.AddListener(Play);
@@ -63,7 +61,10 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetString("Story", "");
         PlayerPrefs.SetInt("Professionalism", 0);
         PlayerPrefs.SetInt("Scandal", 0);
-        //сброс текста и ачивок
+
+        PlayerPrefs.SetInt("Chapter", 1);
+
+        achiveUpdater.SetParameters();
     }
 
     void DisplayOptionsMenu()

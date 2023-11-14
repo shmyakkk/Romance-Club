@@ -93,7 +93,11 @@ public class DialogueManager : MonoBehaviour
         isPrinting = false;
     }
 
-    public void SetDialogueActive(bool isActive) => gameObject.SetActive(isActive);
+    public void SetDialogueActive(bool isActive)
+    {
+        if (!isActive) StopTyping();
+        gameObject.SetActive(isActive);
+    }
 
     public void Show(string name, string sentence)
     {

@@ -30,6 +30,9 @@ public class StartStory : MonoBehaviour
 
     private void Start()
     {
+        if (!PlayerPrefs.HasKey("Story"))
+            PlayerPrefs.SetString("Story", "");
+
         if (PlayerPrefs.GetString("Story") == "")
         {
             PlayerPrefs.SetInt("Professionalism", 0);
@@ -50,7 +53,7 @@ public class StartStory : MonoBehaviour
             nameSubmitBtn.onClick.AddListener(SubmitName);
             dressBtn.onClick.AddListener(OpenDress);
             continueBtn.onClick.AddListener(Continue);
-            startStoryBtn.onClick.AddListener(Fade);
+            startStoryBtn.onClick.AddListener(StartPlot);
 
             dressScreen.SetActive(false);
             bgScreen.SetActive(true);
@@ -62,6 +65,7 @@ public class StartStory : MonoBehaviour
         }
         else
         {
+            UI.SetActive(true);
             dressScreen.SetActive(false);
             bgScreen.SetActive(false);
             dressBtn.gameObject.SetActive(false);
@@ -104,18 +108,13 @@ public class StartStory : MonoBehaviour
         UI.SetActive(true);
 
         dressScreen.SetActive(false);
-        dialogueManager.Show("ГГ", "Выгляжу отлично. Пора начинать!");
-        characterManager.CurrentName = "ГГ";
-        characterManager.SetCharacter("base");
+
         bgScreen.SetActive(false);
         startStoryBtn.gameObject.SetActive(true);
 
         continueBtn.onClick.RemoveListener(Continue);
-    }
 
-    private void Fade()
-    {
-        fader.FadeIn(StartPlot);
+        StartPlot();
     }
 
     private void StartPlot()
@@ -126,8 +125,12 @@ public class StartStory : MonoBehaviour
         dressBG.SetActive(false);
         storyBG.SetActive(true);
         startStoryBtn.gameObject.SetActive(false);
-        storyManager.NextNode();
+
         nextButton.gameObject.SetActive(true);
+
+        dialogueManager.SetDialogueActive(true);
+        storyManager.NextNode();
+
         this.enabled = false;
     }
 }

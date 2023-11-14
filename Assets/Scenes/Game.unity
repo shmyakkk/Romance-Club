@@ -1303,6 +1303,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb4e59514e90489d985e9a17c838085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Horizontal: 0
+  m_Veritical: 0
 --- !u!1 &171387665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1797,6 +1799,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb4e59514e90489d985e9a17c838085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Horizontal: 0
+  m_Veritical: 0
 --- !u!1 &355159542
 GameObject:
   m_ObjectHideFlags: 0
@@ -3030,6 +3034,7 @@ GameObject:
   - component: {fileID: 691244830}
   - component: {fileID: 691244829}
   - component: {fileID: 691244832}
+  - component: {fileID: 691244833}
   m_Layer: 5
   m_Name: Dialogue
   m_TagString: Untagged
@@ -3136,6 +3141,20 @@ MonoBehaviour:
   message: {fileID: 1324040905}
   currentDiamondsPanel: {fileID: 1118086011}
   characterManager: {fileID: 861407874}
+--- !u!114 &691244833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691244826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bb4e59514e90489d985e9a17c838085, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Horizontal: 0
+  m_Veritical: 0
 --- !u!1 &694048967
 GameObject:
   m_ObjectHideFlags: 0
@@ -8393,6 +8412,7 @@ MonoBehaviour:
   achive1: {fileID: 313304475}
   achive2: {fileID: 1610227255}
   achive3: {fileID: 1000876685}
+  chapterNumber: {fileID: 0}
 --- !u!1 &1860812419
 GameObject:
   m_ObjectHideFlags: 0
@@ -8619,9 +8639,10 @@ MonoBehaviour:
   dressRightBtn: {fileID: 2135988890}
   dressBaseChoiceButton: {fileID: 1873388052160652964, guid: fc535cb90ec3a2846ba4b1d720ce1727, type: 3}
   dressDiamondsChoiceButton: {fileID: 4701814951538746338, guid: 6c21896f6f824a44f9cf88747fd37fdf, type: 3}
-  dressOptionPanel: {fileID: 0}
+  dressOptionPanel: {fileID: 926250833}
   characterManager: {fileID: 861407874}
   dialogueManager: {fileID: 691244832}
+  fader: {fileID: 981691874}
 --- !u!114 &2003884074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9093,6 +9114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb4e59514e90489d985e9a17c838085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Horizontal: 0
+  m_Veritical: 0
 --- !u!222 &2071184581
 CanvasRenderer:
   m_ObjectHideFlags: 0

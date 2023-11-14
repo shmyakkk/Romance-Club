@@ -54,6 +54,7 @@ public class StoryManager : MonoBehaviour
     [Header("Scripts")]
     [SerializeField] private CharacterManager characterManager;
     [SerializeField] private DialogueManager dialogueManager;
+    public Fader fader;
 
 
     // Start is called before the first frame update
@@ -77,6 +78,8 @@ public class StoryManager : MonoBehaviour
         {
             string savedState = PlayerPrefs.GetString("Story");
             story.state.LoadJson(savedState);
+
+            backgroungImg.sprite = Resources.Load<Sprite>("BG/" + PlayerPrefs.GetString("BG"));
         }
 
         story.ObserveVariable("professionalism", (string varName, object newValue) => {
@@ -90,6 +93,10 @@ public class StoryManager : MonoBehaviour
         story.ObserveVariable("dress", (string varName, object newValue) => {
             PlayerPrefs.SetInt("Dress", (int)newValue);
             characterManager.ChangeDress();
+        });
+
+        story.ObserveVariable("chapter_number", (string varName, object newValue) => {
+            PlayerPrefs.SetInt("Chapter", (int)newValue);
         });
 
         if (!PlayerPrefs.HasKey("Diamonds"))
@@ -137,7 +144,8 @@ public class StoryManager : MonoBehaviour
 
     public void NextNode()
     {
-        //Is there more to the story?
+        PlayerPrefs.SetString("Story", story.state.ToJson());
+
         if (story.canContinue)
         {
             if (dialogueManager.IsPrinting)
@@ -153,6 +161,8 @@ public class StoryManager : MonoBehaviour
                 {
                     switch (choiceOption)
                     {
+                        case 0:
+                            break;
                         case 1:
                             StartCoroutine(ShowChoices());
                             break;
@@ -173,14 +183,14 @@ public class StoryManager : MonoBehaviour
                 dialogueManager.StopTyping();
             }
         }
-
-        PlayerPrefs.SetString("Story", story.state.ToJson());
     }
 
     // Finished the Story (Dialogue)
     private void FinishDialogue()
     {
         finishScreen.SetActive(true);
+
+        PlayerPrefs.SetString("Story", story.state.ToJson());
     }
 
     // Advance through the story 
@@ -192,6 +202,20 @@ public class StoryManager : MonoBehaviour
         string emotionPattern = @"\(([^)]+)\)";
         string dressPattern = @"dress";
         string objectPattern = @"object";
+        string pausePattern = @"<pause>";
+
+        if (Regex.Match(currentSentence, pausePattern).Success)
+        {
+            SetName("..");
+            characterManager.ClearCharacter();
+            dialogueManager.SetDialogueActive(false);
+
+            nextBtn.enabled = false;
+
+            ParseTags();
+
+            return 0;
+        }
 
         Match nameMatch = Regex.Match(currentSentence, namePattern);
         if (nameMatch.Success)
@@ -363,7 +387,16 @@ public class StoryManager : MonoBehaviour
 
     void SetBG(string _bg)
     {
-        backgroungImg.sprite = Resources.Load<Sprite>("BG/" + _bg);
+        fader.FadeIn(() =>
+        {
+            backgroungImg.sprite = Resources.Load<Sprite>("BG/" + _bg);
+            PlayerPrefs.SetString("BG", _bg);
+
+            dialogueManager.SetDialogueActive(true);
+            NextNode();
+
+            nextBtn.enabled = true;
+        });
     }
 
     void SetInfo(string _text)
@@ -568,5 +601,12 @@ public class StoryManager : MonoBehaviour
 
         if (characterManager.CurrentName == "ГГ")
             characterManager.UpdateCharacterApperance(characterManager.CurrentEmotion);
+    }
+
+    IEnumerator WaitTimeForAction(float time, Action action)
+    {
+        yield return new WaitForSeconds(time);
+
+        action.Invoke();
     }
 }

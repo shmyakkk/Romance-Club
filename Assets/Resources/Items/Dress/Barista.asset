@@ -17,10 +17,15 @@ MonoBehaviour:
   isEnabled: 0
   sprite: {fileID: 21300000, guid: 31f571121f5074747b5f20a2a068782c, type: 3}
   a_base: {fileID: 0}
+  a_displeasure: {fileID: 0}
   a_dream: {fileID: 0}
+  a_dream_2: {fileID: 0}
   a_evil: {fileID: 0}
   a_flirt: {fileID: 0}
+  a_flirt_2: {fileID: 0}
+  a_laugh: {fileID: 0}
   a_sad: {fileID: 0}
   a_smile: {fileID: 0}
   a_surprise: {fileID: 0}
+  a_wide_smile: {fileID: 0}
   a_shadow: {fileID: 0}
