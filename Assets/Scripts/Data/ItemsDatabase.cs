@@ -69,4 +69,14 @@ public static class ItemsDatabase
 
         return array;
     }
+
+    public static void ClearEnabled(Category category)
+    {
+        foreach (var item in AllItems[(int)category])
+        {
+            item.isEnabled = false;
+        }
+
+        AllItems[(int)category][0].isEnabled = true;
+    }
 }

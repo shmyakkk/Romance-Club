@@ -24,7 +24,7 @@ public class StoryManager : MonoBehaviour
     public GameObject UI;
     public GameObject finishScreen;
     public Button finishBtn;
-    public Text timerText;
+    public GameObject timer;
 
 
     [Header("Info")]
@@ -343,7 +343,7 @@ public class StoryManager : MonoBehaviour
 
         //stop timer
         StopAllCoroutines();
-        timerText.gameObject.SetActive(false);
+        timer.SetActive(false);
 
         dialogueManager.SetDialogueActive(true);
         dressChoices.SetActive(false);
@@ -647,7 +647,8 @@ public class StoryManager : MonoBehaviour
 
     private IEnumerator SetTimer(Action action, int time)
     {
-        timerText.gameObject.SetActive(true);
+        timer.SetActive(true);
+        var timerText = timer.GetComponentInChildren<Text>();
 
         while (time > 0)
         {
@@ -657,7 +658,8 @@ public class StoryManager : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
 
-        timerText.gameObject.SetActive(false);
+        timer.SetActive(false);
+
         action?.Invoke();
     }
 }

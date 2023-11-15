@@ -53,6 +53,7 @@ public class MainMenu : MonoBehaviour
         if (!PlayerPrefs.HasKey("Story"))
         {
             PlayerPrefs.SetString("Story", "");
+            ItemsDatabase.ClearEnabled(ItemsDatabase.Category.Dress);
         }
 
         sceneLoader.SetActive(true);
@@ -70,6 +71,12 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetInt("Diamonds", 100);
 
         PlayerPrefs.SetInt("Chapter", 1);
+
+        PlayerPrefs.SetInt("Appearance", 0);
+        PlayerPrefs.SetInt("Dress", 0);
+        PlayerPrefs.SetInt("Hair", 0);
+
+        ItemsDatabase.ClearEnabled(ItemsDatabase.Category.Dress);
 
         achiveUpdater.SetParameters();
     }
