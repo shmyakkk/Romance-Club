@@ -110,6 +110,12 @@ public class CharacterManager : MonoBehaviour
     {
         currentEmotion = a;
 
+        if (a == "none")
+        {
+            SetNone();
+            return;
+        }
+
         if (PlayerPrefs.HasKey(ItemsDatabase.Category.Appearance.ToString()) && appearanceImg)
         {
             var item = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Appearance);
@@ -156,6 +162,12 @@ public class CharacterManager : MonoBehaviour
     {
         if (PlayerPrefs.HasKey(ItemsDatabase.Category.Appearance.ToString()) && appearanceImg)
         {
+            if (a == "none")
+            {
+                SetNone();
+                return;
+            }
+
             var item = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Appearance);
 
             appearanceImg.sprite = a switch
@@ -195,6 +207,12 @@ public class CharacterManager : MonoBehaviour
 
     void SetAnotherCharacterAppearance(string a)
     {
+        if (a == "none") 
+        { 
+            SetNone();
+            return;
+        }
+
         var item = Resources.Load<Item>("Items/Other/" + currentName);
 
         appearanceImg.sprite = a switch

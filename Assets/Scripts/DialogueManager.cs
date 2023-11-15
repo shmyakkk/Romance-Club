@@ -23,8 +23,19 @@ public class DialogueManager : MonoBehaviour
 
     public bool IsPrinting { get => isPrinting; private set => isPrinting = value; }
 
+    private string currentSentence = "";
+    private string currentName = "";
+
+    public void UpdateCurrentSentence()
+    {
+        SetText(currentSentence);
+        SetName(currentName);
+    }
+
     public void SetText(string currentSentence)
     {
+        this.currentSentence = currentSentence;
+
         Vector2 currentPos = dialogueBG.GetComponent<RectTransform>().localPosition;
         Vector2 currentSize = dialogueBG.GetComponent<RectTransform>().sizeDelta;
 
@@ -59,6 +70,8 @@ public class DialogueManager : MonoBehaviour
 
     public void SetName(string _name)
     {
+        currentName = _name;
+
         nameTag.fontSize = 40;
         Animator dialogueAnim = gameObject.GetComponent<Animator>();
 

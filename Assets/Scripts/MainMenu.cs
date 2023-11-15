@@ -50,6 +50,11 @@ public class MainMenu : MonoBehaviour
 
     void Play()
     {
+        if (!PlayerPrefs.HasKey("Story"))
+        {
+            PlayerPrefs.SetString("Story", "");
+        }
+
         sceneLoader.SetActive(true);
         mainMenu.SetActive(false);
 

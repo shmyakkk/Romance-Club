@@ -57,7 +57,6 @@ public class StoryManager : MonoBehaviour
     [SerializeField] private DialogueManager dialogueManager;
     public Fader fader;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -639,6 +638,8 @@ public class StoryManager : MonoBehaviour
     public void CloseDress()
     {
         UI.SetActive(true);
+
+        dialogueManager.UpdateCurrentSentence();
 
         if (characterManager.CurrentName == "ГГ")
             characterManager.UpdateCharacterApperance(characterManager.CurrentEmotion);
