@@ -5360,6 +5360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2b1e03546b88f34cbfa7ce8ea457e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chapterNumberText: {fileID: 910369707}
   loadingBar: {fileID: 1550031384}
   loadingText: {fileID: 1814671650}
 --- !u!1 &910369705

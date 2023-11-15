@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,8 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] private Text nameTag;
-    [SerializeField] private Text message;
+    [SerializeField] private TMP_Text message;
+    [SerializeField] private TMP_Text hiddenMessage;
     [SerializeField] private GameObject currentDiamondsPanel;
     [SerializeField] private CharacterManager characterManager;
     [SerializeField] private GameObject dialogueBG;
@@ -15,8 +17,6 @@ public class DialogueManager : MonoBehaviour
     private Coroutine printingCoroutine;
     private bool isPrinting = false;
     private string currentText;
-
-    private int maxSimbol = 92;
 
     private float startedY = 0;
     private float startedHeight = 300;
@@ -34,11 +34,24 @@ public class DialogueManager : MonoBehaviour
         currentPos = dialogueBG.GetComponent<RectTransform>().localPosition;
         currentSize = dialogueBG.GetComponent<RectTransform>().sizeDelta;
 
-        if (currentSentence.Length > maxSimbol)
+        int offsetPosY = 0;
+        int offsetHeight = 0;
+
+        switch (CountLines(currentSentence))
         {
-            dialogueBG.GetComponent<RectTransform>().localPosition = new Vector2(currentPos.x, currentPos.y - 50);
-            dialogueBG.GetComponent<RectTransform>().sizeDelta = new Vector2(currentSize.x, currentSize.y + 50);
+            case 5:
+                offsetPosY = 50;
+                offsetHeight = 60;
+                break;
+            case 6:
+                offsetPosY = 90;
+                offsetHeight = 120;
+                break;
+            default: break;
         }
+
+        dialogueBG.GetComponent<RectTransform>().localPosition = new Vector2(currentPos.x, currentPos.y - offsetPosY);
+        dialogueBG.GetComponent<RectTransform>().sizeDelta = new Vector2(currentSize.x, currentSize.y + offsetHeight);
 
         StopAllCoroutines();
         printingCoroutine = StartCoroutine(TypeSentence(currentSentence));
@@ -125,5 +138,22 @@ public class DialogueManager : MonoBehaviour
         gameObject.SetActive(true);
         SetName(name);
         SetText(sentence);
+    }
+
+    public int CountLines(string sentence)
+    {
+        if (hiddenMessage == null)
+        {
+            Debug.LogError("TMP_Text component is not assigned.");
+            return 0;
+        }
+
+        hiddenMessage.text = sentence;
+
+        TMP_TextInfo textInfo = hiddenMessage.GetTextInfo(hiddenMessage.text);
+
+        int numberOfLines = textInfo.lineCount;
+
+        return numberOfLines;
     }
 }

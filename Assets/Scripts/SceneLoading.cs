@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class SceneLoading : MonoBehaviour
 {
+    [SerializeField] private TMP_Text chapterNumberText;
     public Image loadingBar;
     public Text loadingText;
 
@@ -20,11 +22,11 @@ public class SceneLoading : MonoBehaviour
     {
         rectTransform = loadingBar.GetComponent<RectTransform>();
         imageWidth = rectTransform.rect.width;
-        Debug.Log(imageWidth);
     }
 
     public void LoadScene(string sceneName) 
     {
+        chapterNumberText.text = "1 сезон/" + PlayerPrefs.GetInt("Chapter").ToString() + " серия";
         StartCoroutine(LoadSceneAsync(sceneName));
     }
 

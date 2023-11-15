@@ -24,6 +24,7 @@ public class StoryManager : MonoBehaviour
     public GameObject UI;
     public GameObject finishScreen;
     public Button finishBtn;
+    public Text timerText;
 
 
     [Header("Info")]
@@ -127,8 +128,6 @@ public class StoryManager : MonoBehaviour
         PlayerPrefs.SetInt("Professionalism", newValue);
 
         anim.SetTrigger("show");
-
-        NextNode();
     }
     private void SetScandal(int newValue)
     {
@@ -138,8 +137,6 @@ public class StoryManager : MonoBehaviour
         PlayerPrefs.SetInt("Scandal", newValue);
 
         anim.SetTrigger("show");
-
-        NextNode();
     }
 
     public void NextNode()
@@ -284,16 +281,19 @@ public class StoryManager : MonoBehaviour
             string text = "";
             int number = 0;
 
-            string pattern = @"^d(\d+)";
-            Match match = Regex.Match(choiceText, pattern);
+            string diamondsPattern = @"^d(\d+)";
+            Match diamondsMatch = Regex.Match(choiceText, diamondsPattern);
 
-            if (match.Success)
+            string timerPattern = @"timer";
+            Match timerMatch = Regex.Match(choiceText, timerPattern);
+
+            if (diamondsMatch.Success)
             {
                 // Получаем число из совпадения и преобразуем его в int
-                number = int.Parse(match.Groups[1].Value);
+                number = int.Parse(diamondsMatch.Groups[1].Value);
 
                 // Удаляем совпадение из строки
-                text = choiceText.Remove(match.Index, match.Length).Trim();
+                text = choiceText.Remove(diamondsMatch.Index, diamondsMatch.Length).Trim();
 
                 temp = Instantiate(diamondsChoiceButton, optionPanel.transform);
 
@@ -307,9 +307,20 @@ public class StoryManager : MonoBehaviour
             }
 
             Selectable selectable = temp.GetComponent<Selectable>();
+            temp.GetComponent<Button>().onClick.AddListener(() => { selectable.Decide(); });
+
+            if (timerMatch.Success)
+            {
+                text = choiceText.Remove(timerMatch.Index, timerMatch.Length).Trim();
+
+                StartCoroutine(SetTimer(() =>
+                {
+                    temp.GetComponent<Button>().onClick.Invoke();
+                }, 5));
+            }
+
             selectable.SetParameters(text, number);
             selectable.element = _choices[i];
-            temp.GetComponent<Button>().onClick.AddListener(() => { selectable.Decide(); });
         }
 
         optionPanel.SetActive(true);
@@ -330,6 +341,10 @@ public class StoryManager : MonoBehaviour
     void AdvanceFromDecision()
     {
         ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Dress).isEnabled = true;
+
+        //stop timer
+        StopAllCoroutines();
+        timerText.gameObject.SetActive(false);
 
         dialogueManager.SetDialogueActive(true);
         dressChoices.SetActive(false);
@@ -361,6 +376,9 @@ public class StoryManager : MonoBehaviour
 
             switch (prefix.ToLower())
             {
+                case "started_bg":
+                    SetStartedBG(param);
+                    break;
                 case "bg":
                     SetBG(param);
                     break;
@@ -404,7 +422,7 @@ public class StoryManager : MonoBehaviour
         }
         else
         {
-            fader.FadeIn(() =>
+            fader.Fade(() =>
             {
                 backgroungImg.sprite = Resources.Load<Sprite>("BG/" + _bg);
                 PlayerPrefs.SetString("BG", _bg);
@@ -415,6 +433,11 @@ public class StoryManager : MonoBehaviour
                 nextBtn.enabled = true;
             });
         }
+    }
+
+    void SetStartedBG(string _bg)
+    {
+        fader.FadeOut();
     }
 
     void SetInfo(string _text)
@@ -619,5 +642,21 @@ public class StoryManager : MonoBehaviour
 
         if (characterManager.CurrentName == "ГГ")
             characterManager.UpdateCharacterApperance(characterManager.CurrentEmotion);
+    }
+
+    private IEnumerator SetTimer(Action action, int time)
+    {
+        timerText.gameObject.SetActive(true);
+
+        while (time > 0)
+        {
+            timerText.text = time.ToString();
+            time -= 1;
+
+            yield return new WaitForSeconds(1);
+        }
+
+        timerText.gameObject.SetActive(false);
+        action?.Invoke();
     }
 }
