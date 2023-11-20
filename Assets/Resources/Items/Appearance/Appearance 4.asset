@@ -18,12 +18,9 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: e77002245816b234c9d1a248f8d62010, type: 3}
   a_base: {fileID: 21300000, guid: e77002245816b234c9d1a248f8d62010, type: 3}
   a_dream: {fileID: 21300000, guid: ce09c22cd942d764988388f03d9b4557, type: 3}
-  a_dream_2: {fileID: 21300000, guid: c01779d009ca95049a30059e4085cbf3, type: 3}
   a_evil: {fileID: 21300000, guid: aa76e1c428ea6b64b90d1953f9146c8e, type: 3}
   a_flirt: {fileID: 21300000, guid: 5d91c4a19cc552445adfd2c3904bed3c, type: 3}
-  a_flirt_2: {fileID: 21300000, guid: 61ecb2bfb26d44b4d8dd6e5750c06981, type: 3}
   a_sad: {fileID: 21300000, guid: c620a576b34797e48a24731486909799, type: 3}
   a_smile: {fileID: 21300000, guid: c335d0c7ba7e7fb48b4618a4f964b4ee, type: 3}
   a_surprise: {fileID: 21300000, guid: be9d2a49e859caa489bcd488411a6b2f, type: 3}
-  a_wide_smile: {fileID: 21300000, guid: 600af25e4708e7846887ad5158bc3d4b, type: 3}
   a_shadow: {fileID: 0}
