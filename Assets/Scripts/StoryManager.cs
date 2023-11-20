@@ -140,10 +140,10 @@ public class StoryManager : MonoBehaviour
 
     public void NextNode()
     {
-        PlayerPrefs.SetString("Story", story.state.ToJson());
-
         if (story.canContinue)
         {
+            PlayerPrefs.SetString("Story", story.state.ToJson());
+
             if (dialogueManager.IsPrinting)
             {
                 dialogueManager.StopTyping();
@@ -189,9 +189,12 @@ public class StoryManager : MonoBehaviour
     // Finished the Story (Dialogue)
     private void FinishDialogue()
     {
-        finishScreen.SetActive(true);
-
         PlayerPrefs.SetString("Story", story.state.ToJson());
+
+        fader.Fade(() =>
+        {
+            finishScreen.SetActive(true);
+        });
     }
 
     // Advance through the story 
@@ -334,6 +337,8 @@ public class StoryManager : MonoBehaviour
     {
         choiceSelected = (Choice)element;
         story.ChooseChoiceIndex(choiceSelected.index);
+
+        PlayerPrefs.SetString("Story", story.state.ToJson());
     }
 
     // After a choice was made, turn off the panel and advance from that choice

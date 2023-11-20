@@ -13,6 +13,11 @@ public class ItemsCategoty : MonoBehaviour
 
     private Toggle toggle;
 
+    private void Awake()
+    {
+        content.UpdateCharacterView();
+    }
+
     private void Start()
     {
         toggle = GetComponent<Toggle>();
