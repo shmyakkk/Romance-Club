@@ -17,15 +17,10 @@ MonoBehaviour:
   isEnabled: 1
   sprite: {fileID: 21300000, guid: 0d19c245a4048b54397f365b9296e87f, type: 3}
   a_base: {fileID: 21300000, guid: 0d19c245a4048b54397f365b9296e87f, type: 3}
-  a_displeasure: {fileID: 21300000, guid: 916ce7a860397524a9155155cd006a5d, type: 3}
   a_dream: {fileID: 0}
-  a_dream_2: {fileID: 0}
   a_evil: {fileID: 21300000, guid: c0ade119ea9f764499fe8ae989a02e2e, type: 3}
   a_flirt: {fileID: 0}
-  a_flirt_2: {fileID: 0}
-  a_laugh: {fileID: 0}
   a_sad: {fileID: 21300000, guid: 7d6c372a4d78c1141bd35a36905239ea, type: 3}
   a_smile: {fileID: 21300000, guid: 70affc5fc91b76041a36fe1828a2f6df, type: 3}
   a_surprise: {fileID: 21300000, guid: 7ce29570c2be5694785a81aa5659b98a, type: 3}
-  a_wide_smile: {fileID: 0}
   a_shadow: {fileID: 0}
