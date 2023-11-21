@@ -129,12 +129,7 @@ public class StoryManager : MonoBehaviour
 
     public void NextNode()
     {
-<<<<<<< HEAD:Assets/InkTest/Scripts/StoryManager.cs
         //Is there more to the story?
-=======
-        PlayerPrefs.SetString("Story", story.state.ToJson());
-
->>>>>>> parent of b69a126 (1.0.3):Assets/Scripts/StoryManager.cs
         if (story.canContinue)
         {
             if (dialogueManager.IsPrinting)
@@ -176,11 +171,6 @@ public class StoryManager : MonoBehaviour
     private void FinishDialogue()
     {
         finishScreen.SetActive(true);
-<<<<<<< HEAD:Assets/InkTest/Scripts/StoryManager.cs
-=======
-
-        PlayerPrefs.SetString("Story", story.state.ToJson());
->>>>>>> parent of b69a126 (1.0.3):Assets/Scripts/StoryManager.cs
     }
 
     // Advance through the story 
