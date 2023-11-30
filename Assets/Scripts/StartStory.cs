@@ -28,6 +28,9 @@ public class StartStory : MonoBehaviour
     public CharacterManager characterManager;
     public Fader fader;
 
+    [Header("DEV")]
+    [SerializeField] private Develop developScript;
+
     private void Start()
     {
         if (!PlayerPrefs.HasKey("Story"))
@@ -119,6 +122,8 @@ public class StartStory : MonoBehaviour
 
     private void StartPlot()
     {
+        developScript.gameObject.SetActive(true);
+
         continueBtn.onClick.AddListener(storyManager.CloseDress);
 
         dressScreen.SetActive(false);

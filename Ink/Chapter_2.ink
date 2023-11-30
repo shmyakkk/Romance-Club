@@ -1,6 +1,8 @@
+=== chapter_2 ===
+<pause>
+ ->part_2_1
 
 === part_2_1 ===
-<pause>
 #started_bg home_evening
 ..: Твое сердце ухнуло вниз.
 Карл (surprise): Это что, я тебя спрашиваю?
@@ -647,6 +649,7 @@
 ГГ (sad): Нет!
 
 #end
+<pause>
 -> END
 
 

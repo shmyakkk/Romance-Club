@@ -57,6 +57,10 @@ public class StoryManager : MonoBehaviour
     [SerializeField] private DialogueManager dialogueManager;
     public Fader fader;
 
+
+    [Header("DEV")]
+    [SerializeField] private Develop developScript;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -76,6 +80,8 @@ public class StoryManager : MonoBehaviour
         }
         else
         {
+            developScript.gameObject.SetActive(true);
+
             string savedState = PlayerPrefs.GetString("Story");
             story.state.LoadJson(savedState);
 
@@ -441,6 +447,14 @@ public class StoryManager : MonoBehaviour
 
     void SetStartedBG(string _bg)
     {
+        backgroungImg.sprite = Resources.Load<Sprite>("BG/" + _bg);
+        PlayerPrefs.SetString("BG", _bg);
+
+        dialogueManager.SetDialogueActive(true);
+        NextNode();
+
+        nextBtn.enabled = true;
+
         fader.FadeOut();
     }
 

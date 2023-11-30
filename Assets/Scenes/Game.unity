@@ -9718,6 +9718,7 @@ MonoBehaviour:
   characterManager: {fileID: 861407874}
   dialogueManager: {fileID: 691244832}
   fader: {fileID: 981691874}
+  developScript: {fileID: 890429591}
 --- !u!114 &2003884074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9746,6 +9747,7 @@ MonoBehaviour:
   dialogueManager: {fileID: 691244832}
   characterManager: {fileID: 861407874}
   fader: {fileID: 981691874}
+  developScript: {fileID: 890429591}
 --- !u!82 &2003884075
 AudioSource:
   m_ObjectHideFlags: 0

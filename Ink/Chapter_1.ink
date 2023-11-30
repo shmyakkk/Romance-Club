@@ -559,4 +559,4 @@ VAR is_tell_true = false
 
 ~ chapter_number = 2
 #end
-->part_2_1
+->chapter_2
