@@ -52,35 +52,48 @@ public class CharacterManager : MonoBehaviour
                 {
                     if (previousName != "ГГ")
                     {
-                        if (previousName != "...")
+                        if (previousName != "..")
                         {
-                            PlayAnimation(OUT_RIGHT, delegate { SetPlayerAppearance(anim); });
+                            PlayAnimation(OUT_RIGHT, delegate { SetPlayerAppearance(anim); PlayAnimation(IN_LEFT, null); });
                         }
                         else
                         {
                             SetPlayerAppearance(anim);
+                            PlayAnimation(IN_LEFT, null);
                         }
                     }
+                    else
+                    {
+                        SetPlayerAppearance(anim);
+                    }
                 }
-                else SetPlayerAppearance(anim);
+                else
+                {
+                    SetPlayerAppearance(anim);
+                    PlayAnimation(IN_LEFT, null);
+                }
+                    break;
+
+            case "..":
                 break;
-            case "...":
-                break;
+
             default:
                 if (previousName != null)
                 {
                     if (previousName == "ГГ")
                     {
-                        PlayAnimation(OUT_LEFT, delegate { SetAnotherCharacterAppearance(anim); });
+                        PlayAnimation(OUT_LEFT, delegate { SetAnotherCharacterAppearance(anim); PlayAnimation(IN_RIGHT, null); });
                     }
-                    else if (previousName == "...")
+                    else if (previousName == "..")
                     {
                         SetAnotherCharacterAppearance(anim);
+                        PlayAnimation(IN_RIGHT, null);
                     }
                     else if (currentName != previousName)
                     {
-                        PlayAnimation(OUT_RIGHT, delegate { SetAnotherCharacterAppearance(anim); });
+                        PlayAnimation(OUT_RIGHT, delegate { SetAnotherCharacterAppearance(anim); PlayAnimation(IN_RIGHT, null); });
                     }
+                    else SetAnotherCharacterAppearance(anim);
                 }
                 break;
         }
@@ -154,8 +167,6 @@ public class CharacterManager : MonoBehaviour
 
         if (PlayerPrefs.HasKey(ItemsDatabase.Category.Accessories.ToString()) && accessoriesImg)
             accessoriesImg.sprite = ItemsDatabase.FindCurrentItem(ItemsDatabase.Category.Accessories).sprite;
-
-        PlayAnimation(IN_LEFT, null);
     }
 
     public void UpdateCharacterApperance(string a)
@@ -236,8 +247,6 @@ public class CharacterManager : MonoBehaviour
         appearanceImg.enabled = true;
         dressImg.enabled = false;
         hairImg.enabled = false;
-
-        PlayAnimation(IN_RIGHT, null);
     }
 
     void SetNone()
@@ -251,7 +260,7 @@ public class CharacterManager : MonoBehaviour
     {
         if (previousName != null)
         {
-            if (previousName != "...")
+            if (previousName != "..")
             {
                 if (previousName == "ГГ")
                 {

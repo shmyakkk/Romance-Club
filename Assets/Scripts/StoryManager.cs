@@ -233,6 +233,8 @@ public class StoryManager : MonoBehaviour
             string name = nameMatch.Groups[1].Value.Trim();
             SetName(name);
 
+            Debug.Log(name);
+
             string emotion = nameMatch.Groups[3].Value.Trim();
             if (!string.IsNullOrEmpty(emotion))
             {
