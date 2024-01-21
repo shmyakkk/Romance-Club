@@ -200,6 +200,7 @@ public class StoryManager : MonoBehaviour
         fader.Fade(() =>
         {
             finishScreen.SetActive(true);
+            GetComponent<MusicManager>().StopBGM();
         });
     }
 
@@ -394,11 +395,17 @@ public class StoryManager : MonoBehaviour
                 case "bg":
                     SetBG(param);
                     break;
+                case "cutscene":
+                    SetCutscene(param);
+                    break;
                 case "info":
                     SetInfo(param);
                     break;
                 case "dress":
                     SetDress(int.Parse(param));
+                    break;
+                case "music":
+                    SetMusic(param);
                     break;
                 case "end":
                     FinishDialogue();
@@ -460,6 +467,32 @@ public class StoryManager : MonoBehaviour
         fader.FadeOut();
     }
 
+    void SetCutscene(string _bg)
+    {
+        fader.Fade(() =>
+        {
+            backgroungImg.sprite = Resources.Load<Sprite>("BG/" + _bg);
+            PlayerPrefs.SetString("BG", _bg);
+
+            backgroungImg.GetComponent<Animator>().Play("Kiss", 0, 0f);
+
+            StartCoroutine(WaitForAnimationEnd(backgroungImg.GetComponent<Animator>(), "Kiss", () => nextBtn.enabled = true));
+        });
+    }
+
+    IEnumerator WaitForAnimationEnd(Animator animator, string animationName, Action onAnimationEndCallback)
+    {
+        while (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName))
+        {
+            yield return null;
+        }
+
+        float animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(animationLength);
+
+        onAnimationEndCallback?.Invoke();
+    }
+
     void SetInfo(string _text)
     {
         Animator anim = infoPanel.GetComponent<Animator>();
@@ -471,6 +504,13 @@ public class StoryManager : MonoBehaviour
     void SetDress(int id)
     {
         PlayerPrefs.SetInt("Dress", id);
+    }
+
+    void SetMusic(string _music)
+    {
+        AudioClip audioClip = Resources.Load<AudioClip>("Music/" + _music);
+
+        gameObject.GetComponent<MusicManager>().ChangeBGM(audioClip);
     }
 
     private int currentDress = 0;
