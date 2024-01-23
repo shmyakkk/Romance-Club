@@ -5,7 +5,6 @@ using UnityEngine.Audio;
 public class MusicManager : MonoBehaviour
 {
     [SerializeField] private AudioSource BGM;
-    [SerializeField] private AudioMixer audioMixer;
 
     private void Awake()
     {
@@ -22,7 +21,7 @@ public class MusicManager : MonoBehaviour
 
     public void ChangeBGM(AudioClip music)
     {
-        StartCoroutine(Fade(music));
+        if (!BGM.mute) StartCoroutine(Fade(music));
     }
 
     public void StopBGM()
@@ -32,13 +31,16 @@ public class MusicManager : MonoBehaviour
 
     private IEnumerator Fade(AudioClip newClip)
     {
-        float timeToFade = 1f;
-        float timeElapsed = 0f;
+        float duration = 1f;
+        float targetVolume = 0f;
 
-        while (timeElapsed < timeToFade)
+        float currentTime = 0;
+        float start = BGM.volume;
+
+        while (currentTime < duration)
         {
-            BGM.volume = Mathf.Lerp(1, 0, timeElapsed / timeToFade);
-            timeElapsed += Time.deltaTime;
+            currentTime += Time.deltaTime;
+            BGM.volume = Mathf.Lerp(start, targetVolume, currentTime / duration);
             yield return null;
         }
 
@@ -46,15 +48,18 @@ public class MusicManager : MonoBehaviour
         BGM.clip = newClip;
         BGM.Play();
 
-        timeElapsed = 0f;
+        targetVolume = 1f;
 
-        while (timeElapsed < timeToFade)
+        currentTime = 0;
+        start = BGM.volume;
+
+        while (currentTime < duration)
         {
-            BGM.volume = Mathf.Lerp(0, 1, timeElapsed / timeToFade);
-            timeElapsed += Time.deltaTime;
+            currentTime += Time.deltaTime;
+            BGM.volume = Mathf.Lerp(start, targetVolume, currentTime / duration);
             yield return null;
         }
 
-        yield return null;
+        yield break;
     }
 }

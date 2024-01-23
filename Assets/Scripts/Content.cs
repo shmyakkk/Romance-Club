@@ -12,7 +12,12 @@ public class Content : MonoBehaviour
     [SerializeField] private Image accessoriesImg;
 
 
-    private void Start()
+    private void Awake()
+    {
+        ResetView();
+    }
+
+    public void ResetView()
     {
         UpdateCharacterView();
         Show(ItemsDatabase.Category.Appearance);
