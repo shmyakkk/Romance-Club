@@ -152,7 +152,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      kiss_scene_0: 3420442247502726267
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
