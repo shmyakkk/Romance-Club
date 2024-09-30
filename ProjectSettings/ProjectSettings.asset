@@ -142,7 +142,7 @@ PlayerSettings:
   bundleVersion: 1.0.5
   preloadedAssets:
   - {fileID: 0}
-  - {fileID: 8013480682184649867, guid: f65430a57bc320e43ab747311f6de296, type: 2}
+  - {fileID: 2742703105448441893, guid: f65430a57bc320e43ab747311f6de296, type: 2}
   - {fileID: 11400000, guid: 9d730e8e4bb6e7c419008a2a4a847f98, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -889,7 +889,8 @@ PlayerSettings:
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
-  cloudServicesEnabled: {}
+  cloudServicesEnabled:
+    Unity Ads: 1
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -909,11 +910,12 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 
+  cloudProjectId: f5f72452-c2ea-4995-b162-2de8e36a6f5a
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: "\u041A\u0440\u0430\u0441\u043E\u0442\u0430 \u0421\u043F\u0430\u0441\u0435\u0442
+    \u041C\u0438\u0440"
+  organizationId: krasota_spaset_mir
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
