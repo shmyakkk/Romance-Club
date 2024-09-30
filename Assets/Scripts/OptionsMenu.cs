@@ -18,7 +18,7 @@ public class OptionsMenu : MonoBehaviour
     public Button copyButton;
 
     [Header("Social Media")]
-    public Button instagramButton;
+    public Button tgButton;
     public Button vkButton;
     public Button tgButton;
 
@@ -60,7 +60,7 @@ public class OptionsMenu : MonoBehaviour
 
         backButton.onClick.AddListener(Back);
         copyButton.onClick.AddListener(CopyToClipboard);
-        instagramButton.onClick.AddListener(InstagramOpenLink);
+        tgButton.onClick.AddListener(TgOpenLink);
         vkButton.onClick.AddListener(VkOpenLink);
         tgButton.onClick.AddListener(TgOpenLink);
     }
@@ -77,9 +77,9 @@ public class OptionsMenu : MonoBehaviour
         string text = textToCopy.text;
         GUIUtility.systemCopyBuffer = text;
     }
-    public void InstagramOpenLink()
+    public void TgOpenLink()
     {
-        Application.OpenURL("https://instagram.com");
+        Application.OpenURL("https://t.me/telegram");
     }
     public void VkOpenLink()
     {
