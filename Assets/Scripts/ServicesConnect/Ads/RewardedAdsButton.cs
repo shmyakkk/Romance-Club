@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
 
@@ -9,12 +9,16 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     [SerializeField] string _iOSAdUnitId = "Rewarded_iOS";
     string _adUnitId = null; // This will remain null for unsupported platforms
 
+    [SerializeField] private Text diamonds;
+
     void Awake()
     {
         // Get the Ad Unit ID for the current platform:
 #if UNITY_IOS
         _adUnitId = _iOSAdUnitId;
 #elif UNITY_ANDROID
+        _adUnitId = _androidAdUnitId;
+#elif UNITY_EDITOR
         _adUnitId = _androidAdUnitId;
 #endif
 
@@ -62,6 +66,8 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
 
             int currentDiamonds = PlayerPrefs.GetInt("Diamonds");
             PlayerPrefs.SetInt("Diamonds", currentDiamonds + 2);
+
+            diamonds.text = PlayerPrefs.GetInt("Diamonds").ToString();
         }
     }
 

@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4407,6 +4406,7 @@ MonoBehaviour:
   _showAdButton: {fileID: 705349948}
   _androidAdUnitId: Rewarded_Android
   _iOSAdUnitId: Rewarded_iOS
+  diamonds: {fileID: 100206112}
 --- !u!1 &716861878
 GameObject:
   m_ObjectHideFlags: 0
@@ -6553,6 +6553,7 @@ GameObject:
   - component: {fileID: 946917755}
   - component: {fileID: 946917754}
   - component: {fileID: 946917756}
+  - component: {fileID: 946917757}
   m_Layer: 0
   m_Name: Services
   m_TagString: Untagged
@@ -6600,6 +6601,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unicID: {fileID: 1806274385}
+--- !u!114 &946917757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946917753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccd5995f6ce927d4abe04e823697a93e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _androidGameId: 5705635
+  _iOSGameId: 5705634
+  _testMode: 1
+  rewardedAdsButton: {fileID: 705349951}
 --- !u!1 &952624952
 GameObject:
   m_ObjectHideFlags: 0
