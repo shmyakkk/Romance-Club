@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class OptionsMenu : MonoBehaviour
 {
@@ -12,12 +14,13 @@ public class OptionsMenu : MonoBehaviour
     public Button backButton;
 
     [Header("Copy Objects")]
-    public Text textToCopy;
+    public TMP_Text textToCopy;
     public Button copyButton;
 
     [Header("Social Media")]
     public Button instagramButton;
     public Button vkButton;
+    public Button tgButton;
 
     [Header("Menu Objects")]
     public GameObject optionsMenu;
@@ -59,7 +62,9 @@ public class OptionsMenu : MonoBehaviour
         copyButton.onClick.AddListener(CopyToClipboard);
         instagramButton.onClick.AddListener(InstagramOpenLink);
         vkButton.onClick.AddListener(VkOpenLink);
+        tgButton.onClick.AddListener(TgOpenLink);
     }
+
 
     public void Back()
     {
@@ -79,5 +84,9 @@ public class OptionsMenu : MonoBehaviour
     public void VkOpenLink()
     {
         Application.OpenURL("https://vk.com");
+    }
+    public void TgOpenLink()
+    {
+        Application.OpenURL("https://t.me/telegram");
     }
 }

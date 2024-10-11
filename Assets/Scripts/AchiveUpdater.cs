@@ -22,7 +22,7 @@ public class AchiveUpdater : MonoBehaviour
     public void SetParameters()
     {
         if (!PlayerPrefs.HasKey("Diamonds"))
-            PlayerPrefs.SetInt("Diamonds", 100);
+            PlayerPrefs.SetInt("Diamonds", 50);
 
         if (!PlayerPrefs.HasKey("Professionalism"))
             PlayerPrefs.SetInt("Professionalism", 0);
