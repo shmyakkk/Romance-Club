@@ -15,7 +15,14 @@ public class AuthManager : MonoBehaviour
     {
         await UnityServices.InitializeAsync();
 
-        SignIn();
+        if (AuthenticationService.Instance.IsSignedIn)
+        {
+            unicID.text = AuthenticationService.Instance.PlayerId;
+        }
+        else
+        {
+            SignIn();
+        }
     }
 
     public async void SignIn()
