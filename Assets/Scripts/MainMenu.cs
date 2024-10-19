@@ -68,7 +68,7 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetInt("Professionalism", 0);
         PlayerPrefs.SetInt("Scandal", 0);
 
-        PlayerPrefs.SetInt("Diamonds", 50);
+        //PlayerPrefs.SetInt("Diamonds", 50);
 
         PlayerPrefs.SetInt("Chapter", 1);
 
