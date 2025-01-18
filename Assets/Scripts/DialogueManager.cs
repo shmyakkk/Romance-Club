@@ -12,6 +12,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject currentDiamondsPanel;
     [SerializeField] private CharacterManager characterManager;
     [SerializeField] private GameObject dialogueBG;
+    [SerializeField] private GameObject choices;
 
     private Coroutine printingCoroutine;
     private bool isPrinting = false;
@@ -41,23 +42,40 @@ public class DialogueManager : MonoBehaviour
         dialogueBG.GetComponent<RectTransform>().localPosition = new Vector2(currentPos.x, startedY);
         dialogueBG.GetComponent<RectTransform>().sizeDelta = new Vector2(currentSize.x, startedHeight);
 
+
         currentPos = dialogueBG.GetComponent<RectTransform>().localPosition;
         currentSize = dialogueBG.GetComponent<RectTransform>().sizeDelta;
 
         int offsetPosY = 0;
         int offsetHeight = 0;
 
+        Vector2 currentPoschoices = choices.GetComponent<RectTransform>().localPosition;
+
+        Debug.Log(choices.GetComponent<RectTransform>().localPosition);
+
         switch (CountLines(currentSentence))
         {
-            case 5:
+            case 4:
                 offsetPosY = 50;
                 offsetHeight = 60;
+                choices.GetComponent<RectTransform>().anchoredPosition = new Vector2(currentPoschoices.x, -1210);
+                break;
+            case 5:
+                offsetPosY = 105;
+                offsetHeight = 130;
+
                 break;
             case 6:
-                offsetPosY = 90;
-                offsetHeight = 120;
+                offsetPosY = 160;
+                offsetHeight = 200;
                 break;
-            default: break;
+            case 7:
+                offsetPosY = 205;
+                offsetHeight = 260;
+                break;
+            default:
+                choices.GetComponent<RectTransform>().anchoredPosition = new Vector2(currentPoschoices.x, -1156);
+                break;
         }
 
         dialogueBG.GetComponent<RectTransform>().localPosition = new Vector2(currentPos.x, currentPos.y - offsetPosY);
@@ -165,6 +183,8 @@ public class DialogueManager : MonoBehaviour
         TMP_TextInfo textInfo = hiddenMessage.GetTextInfo(hiddenMessage.text);
 
         int numberOfLines = textInfo.lineCount;
+
+        Debug.Log(numberOfLines);
 
         return numberOfLines;
     }
