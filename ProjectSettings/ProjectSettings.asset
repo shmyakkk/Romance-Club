@@ -143,8 +143,6 @@ PlayerSettings:
   bundleVersion: 1.0.7
   preloadedAssets:
   - {fileID: 0}
-  - {fileID: 8013480682184649867, guid: f65430a57bc320e43ab747311f6de296, type: 2}
-  - {fileID: 11400000, guid: 9d730e8e4bb6e7c419008a2a4a847f98, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -894,6 +892,7 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
+    Build: 0
     Unity Ads: 1
   luminIcon:
     m_Name: 
