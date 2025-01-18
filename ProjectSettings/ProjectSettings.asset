@@ -13,7 +13,8 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: razrabstory
-  productName: Romance Club
+  productName: "\u041A\u0440\u0430\u0441\u043E\u0442\u0430 \u0421\u043F\u0430\u0441\u0435\u0442
+    \u041C\u0438\u0440"
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -168,7 +169,7 @@ PlayerSettings:
     Android: com.razrabstory.RomanceClub
     Lumin: com.DefaultCompany.com.unity.template.mobile2D
     Standalone: com.DefaultCompany.com.unity.template.mobile2D
-    iPhone: com.razrabstory.Romance-Club
+    iPhone: com.razrabstory.----------------------------------
     tvOS: com.DefaultCompany.com.unity.template.mobile2D
   buildNumber:
     Bratwurst: 0
@@ -894,6 +895,7 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
+    Purchasing: 1
     Unity Ads: 1
   luminIcon:
     m_Name: 

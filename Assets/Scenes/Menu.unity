@@ -764,6 +764,8 @@ GameObject:
   - component: {fileID: 98652085}
   - component: {fileID: 98652084}
   - component: {fileID: 98652086}
+  - component: {fileID: 98652087}
+  - component: {fileID: 98652088}
   m_Layer: 0
   m_Name: Services
   m_TagString: Untagged
@@ -815,6 +817,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unicID: {fileID: 710567607}
+--- !u!114 &98652087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98652083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab5cfa237385ab49b59afdb2cb3ca85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &98652088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98652083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 698b5638bd33af74299c333b89144148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &100206109
 GameObject:
   m_ObjectHideFlags: 0
@@ -5319,6 +5345,7 @@ GameObject:
   - component: {fileID: 774014253}
   - component: {fileID: 774014255}
   - component: {fileID: 774014254}
+  - component: {fileID: 774014257}
   - component: {fileID: 774014256}
   m_Layer: 5
   m_Name: Price
@@ -5429,6 +5456,46 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &774014257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774014252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b79b5624d944058bd39aad2b90fb275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productId: diamonds500
+  buttonType: 0
+  consumePurchase: 1
+  onTransactionsRestored:
+    m_PersistentCalls:
+      m_Calls: []
+  onPurchaseComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 98652087}
+        m_TargetAssemblyTypeName: MyIAPManager, Assembly-CSharp
+        m_MethodName: Buy_500
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPurchaseFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  onProductFetched:
+    m_PersistentCalls:
+      m_Calls: []
+  button: {fileID: 774014256}
 --- !u!1 &791085716
 GameObject:
   m_ObjectHideFlags: 0
@@ -7235,6 +7302,7 @@ GameObject:
   - component: {fileID: 1070724897}
   - component: {fileID: 1070724896}
   - component: {fileID: 1070724898}
+  - component: {fileID: 1070724899}
   m_Layer: 5
   m_Name: Price
   m_TagString: Untagged
@@ -7344,6 +7412,46 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1070724899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070724894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b79b5624d944058bd39aad2b90fb275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productId: diamonds50
+  buttonType: 0
+  consumePurchase: 1
+  onTransactionsRestored:
+    m_PersistentCalls:
+      m_Calls: []
+  onPurchaseComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 98652087}
+        m_TargetAssemblyTypeName: MyIAPManager, Assembly-CSharp
+        m_MethodName: Buy_50
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPurchaseFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  onProductFetched:
+    m_PersistentCalls:
+      m_Calls: []
+  button: {fileID: 1070724898}
 --- !u!1 &1080232678
 GameObject:
   m_ObjectHideFlags: 0
@@ -9141,6 +9249,7 @@ GameObject:
   - component: {fileID: 1358624324}
   - component: {fileID: 1358624323}
   - component: {fileID: 1358624325}
+  - component: {fileID: 1358624326}
   m_Layer: 5
   m_Name: Price
   m_TagString: Untagged
@@ -9250,6 +9359,46 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1358624326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358624321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b79b5624d944058bd39aad2b90fb275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productId: diamonds150
+  buttonType: 0
+  consumePurchase: 1
+  onTransactionsRestored:
+    m_PersistentCalls:
+      m_Calls: []
+  onPurchaseComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 98652087}
+        m_TargetAssemblyTypeName: MyIAPManager, Assembly-CSharp
+        m_MethodName: Buy_150
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPurchaseFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  onProductFetched:
+    m_PersistentCalls:
+      m_Calls: []
+  button: {fileID: 1358624325}
 --- !u!1 &1389483648
 GameObject:
   m_ObjectHideFlags: 0
@@ -10822,6 +10971,7 @@ GameObject:
   - component: {fileID: 1663489699}
   - component: {fileID: 1663489698}
   - component: {fileID: 1663489697}
+  - component: {fileID: 1663489700}
   m_Layer: 5
   m_Name: Restore Button
   m_TagString: Untagged
@@ -10943,6 +11093,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1663489695}
   m_CullTransparentMesh: 1
+--- !u!114 &1663489700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663489695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b79b5624d944058bd39aad2b90fb275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productId: 
+  buttonType: 1
+  consumePurchase: 1
+  onTransactionsRestored:
+    m_PersistentCalls:
+      m_Calls: []
+  onPurchaseComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onPurchaseFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  onProductFetched:
+    m_PersistentCalls:
+      m_Calls: []
+  button: {fileID: 1663489697}
 --- !u!1 &1665712050
 GameObject:
   m_ObjectHideFlags: 0
@@ -13017,6 +13195,7 @@ GameObject:
   - component: {fileID: 2111875013}
   - component: {fileID: 2111875012}
   - component: {fileID: 2111875014}
+  - component: {fileID: 2111875015}
   m_Layer: 5
   m_Name: Price
   m_TagString: Untagged
@@ -13126,6 +13305,46 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2111875015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111875010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b79b5624d944058bd39aad2b90fb275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productId: diamonds25
+  buttonType: 0
+  consumePurchase: 1
+  onTransactionsRestored:
+    m_PersistentCalls:
+      m_Calls: []
+  onPurchaseComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 98652087}
+        m_TargetAssemblyTypeName: MyIAPManager, Assembly-CSharp
+        m_MethodName: Buy_25
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPurchaseFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  onProductFetched:
+    m_PersistentCalls:
+      m_Calls: []
+  button: {fileID: 2111875014}
 --- !u!1 &2118678995
 GameObject:
   m_ObjectHideFlags: 0
